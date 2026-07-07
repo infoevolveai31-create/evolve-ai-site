@@ -43,10 +43,12 @@ export default function ContactPage() {
                 30-minute strategy call with our team.
               </p>
               <a
-                href="mailto:infoevolveai31@gmail.com?subject=Strategy%20call%20request&body=Hi%20Evolve%20AI%20team%2C%0A%0AI%27d%20like%20to%20book%20a%2030-minute%20strategy%20call.%20Here%27s%20a%20few%20times%20that%20work%20for%20me%3A%0A%0A-%20%0A-%20%0A%0AThanks!"
+                href="https://calendly.com/infoevolveai31/30min"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex w-full items-center justify-center rounded-full border border-border bg-bg px-6 py-3 text-sm font-medium text-fg hover:border-teal/50 transition-colors"
               >
-                Email us to book a time
+                View available times
               </a>
             </div>
             <div className="rounded-2xl border border-border bg-bg-elevated p-8 flex flex-col gap-4">
