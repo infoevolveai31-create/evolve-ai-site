@@ -4,16 +4,16 @@ A Next.js 16 (App Router) marketing site for Evolve AI: hybrid AI agency + produ
 
 ## What's included
 
-- **Home** — hero, social proof, services overview, product teaser, case study highlights, testimonials, FAQ, CTA
+- **Home** — hero, services overview, product teaser, FAQ, CTA
 - **Services** — 4 core offerings with process/methodology
 - **Product** — platform features, product screenshot mockup, integrations
-- **Case Studies** — index + 3 detailed case study pages (dynamic routes)
 - **Pricing** — 3-tier pricing with FAQ
 - **Blog** — index + 3 sample posts (dynamic routes)
-- **About** — mission, story, values, team
+- **About** — mission, story, values
 - **Contact** — form + booking CTA + contact info
+- **Privacy Policy / Terms of Service / Security** — real legal pages
 
-All copy is placeholder content written to sound like a real AI agency — replace with your real services, case studies, team, and pricing before launch. Edit `src/lib/data.ts` for most content, or the individual `page.tsx` files for hero copy and layout.
+Service, pricing, and blog copy is illustrative — replace with your real offerings and content in `src/lib/data.ts`, or the individual `page.tsx` files for hero copy and layout. Fabricated case studies, testimonials, team bios, client logos, and stats have been removed rather than shipped as placeholder claims — add these back with real proof points once you have them.
 
 ## Brand
 
@@ -43,8 +43,7 @@ This is a standard Next.js app — deploys cleanly to Vercel (recommended, zero 
 
 ## Next steps to make this "yours"
 
-1. Replace placeholder copy in `src/lib/data.ts` (services, case studies, pricing, team, blog posts, testimonials) with real content.
-2. Swap in your real logo file if you have the original asset, and update `src/components/Logo.tsx`.
-3. Wire the contact form (`src/components/ContactForm.tsx`) to a real backend (e.g. Resend, Formspree, or your own API route) — it currently just shows a success state on submit.
-4. Add real analytics (Plausible, GA, PostHog) in `src/app/layout.tsx`.
-5. Connect your domain once deployed.
+1. Replace placeholder copy in `src/lib/data.ts` (services, pricing, blog posts) with real content.
+2. Add real case studies, testimonials, team bios, client logos, and stats once you have them to share — these were intentionally removed rather than shipped as fabricated content.
+3. Swap in your real logo file if you have the original asset, and update `src/components/Logo.tsx`.
+4. Connect your domain once deployed.
