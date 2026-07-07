@@ -4,16 +4,7 @@ import { Button } from "@/components/Button";
 import { Eyebrow, SectionHeading } from "@/components/SectionHeading";
 import { Glow } from "@/components/Glow";
 import { Badge } from "@/components/Badge";
-import { services, caseStudies, testimonials, faqs } from "@/lib/data";
-
-const logos = ["Northwind", "Harbor Financial", "Brightside Health", "Vertex Retail", "Cobalt Systems", "Fernwood"];
-
-const stats = [
-  { value: "40+", label: "AI systems shipped to production" },
-  { value: "$18M+", label: "Client cost savings generated" },
-  { value: "9 weeks", label: "Average time to first deployment" },
-  { value: "97%", label: "Client retention rate" },
-];
+import { services, faqs } from "@/lib/data";
 
 export default function Home() {
   return (
@@ -38,40 +29,10 @@ export default function Home() {
               <Button href="/contact" size="lg">
                 Book a strategy call
               </Button>
-              <Button href="/case-studies" variant="secondary" size="lg">
-                See our work
+              <Button href="/services" variant="secondary" size="lg">
+                See what we do
               </Button>
             </div>
-          </div>
-
-          {/* logo marquee */}
-          <div className="mt-20 overflow-hidden">
-            <p className="text-center text-xs uppercase tracking-widest text-fg-faint mb-6">
-              Trusted by forward-thinking teams
-            </p>
-            <div className="flex gap-16 whitespace-nowrap animate-marquee">
-              {[...logos, ...logos].map((l, i) => (
-                <span key={i} className="font-display text-xl font-semibold text-fg-faint/70 shrink-0">
-                  {l}
-                </span>
-              ))}
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* STATS */}
-      <section className="border-y border-border bg-bg-elevated/30">
-        <Container className="py-14">
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
-            {stats.map((s) => (
-              <div key={s.label} className="flex flex-col items-center text-center gap-2">
-                <span className="font-display text-3xl sm:text-4xl font-bold text-gradient">
-                  {s.value}
-                </span>
-                <span className="text-sm text-fg-muted max-w-[16ch]">{s.label}</span>
-              </div>
-            ))}
           </div>
         </Container>
       </section>
@@ -162,58 +123,6 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* CASE STUDIES */}
-      <section className="py-28">
-        <Container>
-          <SectionHeading
-            eyebrow="Proof, not promises"
-            title="Real deployments. Real numbers."
-            description="A few of the systems we've shipped for clients across logistics, financial services, and healthcare."
-          />
-          <div className="mt-16 grid gap-6 lg:grid-cols-3">
-            {caseStudies.map((cs) => (
-              <Link
-                key={cs.slug}
-                href={`/case-studies/${cs.slug}`}
-                className="group flex flex-col gap-5 rounded-2xl border border-border bg-bg-elevated p-7 hover:border-teal/40 transition-colors"
-              >
-                <span className="text-xs font-medium uppercase tracking-wide text-teal">{cs.industry}</span>
-                <h3 className="font-display text-xl font-semibold leading-snug">{cs.title}</h3>
-                <div className="mt-auto flex gap-6 pt-4 border-t border-border">
-                  {cs.metrics.slice(0, 2).map((m) => (
-                    <div key={m.label} className="flex flex-col">
-                      <span className="font-display text-xl font-bold text-gradient">{m.value}</span>
-                      <span className="text-xs text-fg-faint">{m.label}</span>
-                    </div>
-                  ))}
-                </div>
-              </Link>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* TESTIMONIALS */}
-      <section className="py-28 border-y border-border bg-bg-elevated/30">
-        <Container>
-          <SectionHeading eyebrow="Client voices" title="What it's like to work with us" />
-          <div className="mt-16 grid gap-6 lg:grid-cols-3">
-            {testimonials.map((t) => (
-              <div key={t.name} className="flex flex-col gap-6 rounded-2xl border border-border bg-bg-elevated p-7">
-                <p className="text-fg leading-relaxed">&ldquo;{t.quote}&rdquo;</p>
-                <div className="mt-auto flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-gradient-to-br from-teal to-indigo" />
-                  <div>
-                    <p className="text-sm font-semibold">{t.name}</p>
-                    <p className="text-xs text-fg-muted">{t.title}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
         </Container>
       </section>
