@@ -2,6 +2,32 @@ import Link from "next/link";
 import { Logo } from "./Logo";
 import { Container } from "./Container";
 
+const socials = [
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/automation_by_abhi/",
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" strokeWidth="1.8" />
+        <circle cx="12" cy="12" r="4.2" stroke="currentColor" strokeWidth="1.8" />
+        <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" />
+      </svg>
+    ),
+  },
+  {
+    label: "X",
+    href: "https://x.com/AIBYABHI",
+    icon: (
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M18.9 2H22l-7.6 8.7L23.3 22H16.9l-5-6.5L6.1 22H3l8.2-9.3L2.9 2h6.6l4.5 6 4.9-6Z"
+          fill="currentColor"
+        />
+      </svg>
+    ),
+  },
+];
+
 const columns = [
   {
     title: "Company",
@@ -42,13 +68,16 @@ export function Footer() {
               for teams that need results, not experiments.
             </p>
             <div className="flex items-center gap-3 pt-1">
-              {["X", "in", "gh"].map((s) => (
+              {socials.map((s) => (
                 <a
-                  key={s}
-                  href="#"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-xs text-fg-muted hover:text-teal hover:border-teal/50 transition-colors"
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-fg-muted hover:text-teal hover:border-teal/50 transition-colors"
                 >
-                  {s}
+                  {s.icon}
                 </a>
               ))}
             </div>
