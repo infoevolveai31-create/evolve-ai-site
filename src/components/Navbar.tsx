@@ -9,7 +9,6 @@ import { Button } from "./Button";
 const links = [
   { href: "/services", label: "Services" },
   { href: "/product", label: "Product" },
-  { href: "/case-studies", label: "Case Studies" },
   { href: "/pricing", label: "Pricing" },
   { href: "/blog", label: "Blog" },
   { href: "/about", label: "About" },

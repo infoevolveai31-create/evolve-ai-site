@@ -36,7 +36,6 @@ const columns = [
     title: "Company",
     links: [
       { href: "/about", label: "About" },
-      { href: "/case-studies", label: "Case Studies" },
       { href: "/blog", label: "Blog" },
       { href: "/contact", label: "Contact" },
     ],
@@ -170,7 +169,7 @@ export function Footer() {
         </div>
         <div className="mt-14 flex flex-col-reverse items-center justify-between gap-4 border-t border-border pt-8 sm:flex-row">
           <p className="text-xs text-fg-faint">
-            &copy; {new Date().getFullYear()} Evolve AI, Inc. All rights reserved.
+            &copy; {new Date().getFullYear()} Evolve AI. All rights reserved.
           </p>
           <p className="text-xs text-fg-faint">Designed and built by Evolve AI.</p>
         </div>
