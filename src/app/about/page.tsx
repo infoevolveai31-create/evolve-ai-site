@@ -3,7 +3,6 @@ import { Container } from "@/components/Container";
 import { Button } from "@/components/Button";
 import { Eyebrow, SectionHeading } from "@/components/SectionHeading";
 import { Glow } from "@/components/Glow";
-import { team } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "About",
@@ -79,24 +78,6 @@ export default function AboutPage() {
               <div key={v.title} className="flex flex-col gap-3 rounded-2xl border border-border bg-bg-elevated p-6">
                 <h3 className="font-display text-lg font-semibold">{v.title}</h3>
                 <p className="text-sm text-fg-muted leading-relaxed">{v.description}</p>
-              </div>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="py-24">
-        <Container>
-          <SectionHeading eyebrow="Leadership" title="The team behind Evolve AI" />
-          <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {team.map((m) => (
-              <div key={m.name} className="flex flex-col gap-4 rounded-2xl border border-border bg-bg-elevated p-6">
-                <div className="h-14 w-14 rounded-full bg-gradient-to-br from-teal to-indigo" />
-                <div>
-                  <h3 className="font-semibold text-fg">{m.name}</h3>
-                  <p className="text-sm text-teal">{m.role}</p>
-                </div>
-                <p className="text-sm text-fg-muted leading-relaxed">{m.bio}</p>
               </div>
             ))}
           </div>
