@@ -52,9 +52,9 @@ const columns = [
   {
     title: "Legal",
     links: [
-      { href: "/contact", label: "Privacy Policy" },
-      { href: "/contact", label: "Terms of Service" },
-      { href: "/contact", label: "Security" },
+      { href: "/privacy", label: "Privacy Policy" },
+      { href: "/terms", label: "Terms of Service" },
+      { href: "/security", label: "Security" },
     ],
   },
 ];
