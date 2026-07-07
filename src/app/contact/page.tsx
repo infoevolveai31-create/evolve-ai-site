@@ -10,9 +10,8 @@ export const metadata: Metadata = {
 };
 
 const info = [
-  { label: "Email", value: "hello@evolveai.com" },
-  { label: "Phone", value: "+1 (415) 555-0148" },
-  { label: "Office", value: "548 Market Street, San Francisco, CA" },
+  { label: "Email", value: "infoevolveai31@gmail.com" },
+  { label: "Phone", value: "+44 7443 807373" },
 ];
 
 export default function ContactPage() {
