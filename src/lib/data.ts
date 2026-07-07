@@ -66,78 +66,6 @@ export const services: Service[] = [
   },
 ];
 
-export type CaseStudy = {
-  slug: string;
-  client: string;
-  industry: string;
-  title: string;
-  summary: string;
-  metrics: { label: string; value: string }[];
-  challenge: string;
-  solution: string;
-  result: string;
-};
-
-export const caseStudies: CaseStudy[] = [
-  {
-    slug: "northwind-logistics",
-    client: "Northwind Logistics",
-    industry: "Supply Chain",
-    title: "Cutting dispatch planning time by 78% with an autonomous routing agent",
-    summary:
-      "We replaced a 6-hour manual dispatch process with an AI agent that plans routes, flags exceptions, and rebalances loads in real time.",
-    metrics: [
-      { label: "Planning time", value: "-78%" },
-      { label: "Fuel cost", value: "-14%" },
-      { label: "On-time delivery", value: "+11 pts" },
-    ],
-    challenge:
-      "Northwind's dispatch team spent most of each morning manually building routes across a fleet of 200+ vehicles, leading to delays and inconsistent decisions across shifts.",
-    solution:
-      "We built a custom planning agent that ingests live order, traffic, and driver-availability data, generates optimized routes, and explains every recommendation so dispatchers can override with one click.",
-    result:
-      "Dispatch planning dropped from 6 hours to under 80 minutes, fuel spend fell 14% from better routing, and on-time delivery improved 11 points in the first quarter after launch.",
-  },
-  {
-    slug: "harbor-financial",
-    client: "Harbor Financial",
-    industry: "Financial Services",
-    title: "Automating compliance review with a document intelligence pipeline",
-    summary:
-      "A custom document AI pipeline now pre-screens 100% of incoming client files, cutting manual review workload by more than half.",
-    metrics: [
-      { label: "Review workload", value: "-58%" },
-      { label: "Processing time", value: "-65%" },
-      { label: "Flagged accuracy", value: "96%" },
-    ],
-    challenge:
-      "Harbor's compliance team manually reviewed thousands of onboarding documents each month, creating bottlenecks and inconsistent risk flagging.",
-    solution:
-      "We deployed a fine-tuned document intelligence pipeline that extracts key fields, cross-references policy rules, and routes only genuinely ambiguous cases to human reviewers.",
-    result:
-      "Manual review workload fell 58%, average processing time dropped from 3 days to under 24 hours, and flagged-case accuracy held at 96% against auditor sampling.",
-  },
-  {
-    slug: "brightside-health",
-    client: "Brightside Health Group",
-    industry: "Healthcare",
-    title: "A patient-intake copilot that gave clinical staff 3 extra hours a day",
-    summary:
-      "An AI copilot handles intake summarization, scheduling, and follow-up drafting, freeing clinical staff to focus on patient care.",
-    metrics: [
-      { label: "Admin time saved", value: "3 hrs/day" },
-      { label: "Intake accuracy", value: "99.2%" },
-      { label: "Staff satisfaction", value: "+34%" },
-    ],
-    challenge:
-      "Clinical staff were losing hours each day to administrative intake work — summarizing notes, scheduling follow-ups, and drafting patient communications.",
-    solution:
-      "We designed a HIPAA-aware copilot embedded directly in their EHR workflow, handling summarization and draft communications with mandatory clinician sign-off.",
-    result:
-      "Staff reclaimed roughly 3 hours per day on average, intake summary accuracy reached 99.2% against clinician review, and internal satisfaction scores rose 34%.",
-  },
-];
-
 export type PricingPlan = {
   name: string;
   price: string;
@@ -224,34 +152,6 @@ export const productFeatures = [
     description: "Set budgets per workflow and get alerted before costs run away.",
     icon: "gauge",
   },
-];
-
-export const testimonials = [
-  {
-    quote:
-      "Evolve AI didn't just hand us a model — they rebuilt our dispatch process around it. The ROI was obvious within the first month.",
-    name: "Maya Chen",
-    title: "COO, Northwind Logistics",
-  },
-  {
-    quote:
-      "The team felt like an extension of our own engineering org. Thoughtful, fast, and honest about what AI could and couldn't do.",
-    name: "David Okonkwo",
-    title: "VP Engineering, Harbor Financial",
-  },
-  {
-    quote:
-      "We'd tried two other vendors before Evolve AI. This was the first team that actually shipped something our staff loved using.",
-    name: "Dr. Priya Ramaswami",
-    title: "Chief Medical Officer, Brightside Health Group",
-  },
-];
-
-export const team = [
-  { name: "Alex Rivera", role: "Co-Founder & CEO", bio: "Ex-Applied ML lead at a Fortune 500 logistics company." },
-  { name: "Sam Okafor", role: "Co-Founder & CTO", bio: "Previously built ML infrastructure serving 200M+ requests/day." },
-  { name: "Jordan Lee", role: "Head of Client Engineering", bio: "10+ years shipping production ML systems across fintech and healthcare." },
-  { name: "Priya Nair", role: "Head of Product", bio: "Focused on making powerful AI tooling usable for non-technical teams." },
 ];
 
 export const faqs = [
