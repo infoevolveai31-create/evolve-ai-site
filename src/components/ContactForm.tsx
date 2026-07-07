@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 
-export function ContactForm() {
-  const [submitted, setSubmitted] = useState(false);
+type Status = "idle" | "submitting" | "success" | "error";
 
-  if (submitted) {
+export function ContactForm() {
+  const [status, setStatus] = useState<Status>("idle");
+
+  if (status === "success") {
     return (
       <div className="rounded-2xl border border-teal/40 bg-teal/10 p-8 text-center">
         <h3 className="font-display text-xl font-semibold text-fg">Thanks — message sent.</h3>
@@ -18,9 +20,29 @@ export function ContactForm() {
 
   return (
     <form
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
-        setSubmitted(true);
+        setStatus("submitting");
+        const form = e.currentTarget;
+        const data = new FormData(form);
+        data.append("_subject", "New enquiry from theevolveai.com");
+        data.append("_captcha", "false");
+        data.append("_template", "table");
+
+        try {
+          const res = await fetch(
+            "https://formsubmit.co/ajax/infoevolveai31@gmail.com",
+            {
+              method: "POST",
+              headers: { Accept: "application/json" },
+              body: data,
+            }
+          );
+          if (!res.ok) throw new Error("Request failed");
+          setStatus("success");
+        } catch {
+          setStatus("error");
+        }
       }}
       className="flex flex-col gap-5"
     >
@@ -31,6 +53,7 @@ export function ContactForm() {
           </label>
           <input
             id="name"
+            name="name"
             required
             type="text"
             placeholder="Jane Doe"
@@ -43,6 +66,7 @@ export function ContactForm() {
           </label>
           <input
             id="email"
+            name="email"
             required
             type="email"
             placeholder="jane@company.com"
@@ -56,6 +80,7 @@ export function ContactForm() {
         </label>
         <input
           id="company"
+          name="company"
           type="text"
           placeholder="Company, Inc."
           className="rounded-xl border border-border bg-bg px-4 py-3 text-sm text-fg placeholder:text-fg-faint focus:outline-none focus:border-teal/50"
@@ -67,17 +92,28 @@ export function ContactForm() {
         </label>
         <textarea
           id="message"
+          name="message"
           required
           rows={5}
           placeholder="Tell us a bit about the workflow or problem you have in mind..."
           className="resize-none rounded-xl border border-border bg-bg px-4 py-3 text-sm text-fg placeholder:text-fg-faint focus:outline-none focus:border-teal/50"
         />
       </div>
+      {status === "error" && (
+        <p className="text-sm text-red-400">
+          Something went wrong sending your message. Please email us directly at{" "}
+          <a href="mailto:infoevolveai31@gmail.com" className="underline">
+            infoevolveai31@gmail.com
+          </a>
+          .
+        </p>
+      )}
       <button
         type="submit"
-        className="mt-2 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-teal to-blue px-6 py-3.5 text-sm font-semibold text-[#06140f] hover:brightness-110 transition"
+        disabled={status === "submitting"}
+        className="mt-2 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-teal to-blue px-6 py-3.5 text-sm font-semibold text-[#06140f] hover:brightness-110 transition disabled:opacity-60 disabled:cursor-not-allowed"
       >
-        Send message
+        {status === "submitting" ? "Sending..." : "Send message"}
       </button>
     </form>
   );

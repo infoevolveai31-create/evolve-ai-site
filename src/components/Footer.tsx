@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import { Logo } from "./Logo";
 import { Container } from "./Container";
@@ -56,6 +59,67 @@ const columns = [
   },
 ];
 
+type NewsletterStatus = "idle" | "submitting" | "success" | "error";
+
+function NewsletterForm() {
+  const [status, setStatus] = useState<NewsletterStatus>("idle");
+
+  if (status === "success") {
+    return (
+      <p className="text-sm text-teal">You&apos;re on the list — thanks for subscribing.</p>
+    );
+  }
+
+  return (
+    <form
+      onSubmit={async (e) => {
+        e.preventDefault();
+        setStatus("submitting");
+        const form = e.currentTarget;
+        const data = new FormData(form);
+        data.append("_subject", "New newsletter signup from theevolveai.com");
+        data.append("_captcha", "false");
+
+        try {
+          const res = await fetch(
+            "https://formsubmit.co/ajax/infoevolveai31@gmail.com",
+            {
+              method: "POST",
+              headers: { Accept: "application/json" },
+              body: data,
+            }
+          );
+          if (!res.ok) throw new Error("Request failed");
+          setStatus("success");
+        } catch {
+          setStatus("error");
+        }
+      }}
+      className="flex flex-col gap-2"
+    >
+      <div className="flex gap-2">
+        <input
+          type="email"
+          name="email"
+          required
+          placeholder="you@company.com"
+          className="min-w-0 flex-1 rounded-full border border-border bg-bg px-4 py-2.5 text-sm text-fg placeholder:text-fg-faint focus:outline-none focus:border-teal/50"
+        />
+        <button
+          type="submit"
+          disabled={status === "submitting"}
+          className="rounded-full bg-gradient-to-r from-teal to-blue px-5 py-2.5 text-sm font-semibold text-[#06140f] hover:brightness-110 transition disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+          {status === "submitting" ? "..." : "Join"}
+        </button>
+      </div>
+      {status === "error" && (
+        <p className="text-xs text-red-400">Something went wrong. Please try again.</p>
+      )}
+    </form>
+  );
+}
+
 export function Footer() {
   return (
     <footer className="border-t border-border bg-bg-elevated/40 mt-32">
@@ -101,20 +165,7 @@ export function Footer() {
             <p className="text-sm text-fg-muted">
               Get occasional notes on applied AI, sent when we have something worth saying.
             </p>
-            <form className="flex gap-2">
-              <input
-                type="email"
-                required
-                placeholder="you@company.com"
-                className="min-w-0 flex-1 rounded-full border border-border bg-bg px-4 py-2.5 text-sm text-fg placeholder:text-fg-faint focus:outline-none focus:border-teal/50"
-              />
-              <button
-                type="submit"
-                className="rounded-full bg-gradient-to-r from-teal to-blue px-5 py-2.5 text-sm font-semibold text-[#06140f] hover:brightness-110 transition"
-              >
-                Join
-              </button>
-            </form>
+            <NewsletterForm />
           </div>
         </div>
         <div className="mt-14 flex flex-col-reverse items-center justify-between gap-4 border-t border-border pt-8 sm:flex-row">
