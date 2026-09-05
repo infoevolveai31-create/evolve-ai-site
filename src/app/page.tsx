@@ -19,11 +19,32 @@ export default function Home() {
     }
     const f = document.getElementById("auditForm") as HTMLFormElement | null;
     const done = document.getElementById("formDone");
-    const handler = (ev: Event) => {
-      ev.preventDefault();
-      if (f && !f.checkValidity()) { f.reportValidity(); return; }
+    const showDone = () => {
       if (f) f.style.display = "none";
       if (done) done.style.display = "block";
+    };
+    const handler = async (ev: Event) => {
+      ev.preventDefault();
+      if (f && !f.checkValidity()) { f.reportValidity(); return; }
+      const btn = f?.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+      if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
+      try {
+        if (f) {
+          const data = new FormData(f);
+          data.append("_subject", "New funnel-audit request from theevolveai.com (home)");
+          data.append("_captcha", "false");
+          data.append("_template", "table");
+          await fetch("https://formsubmit.co/ajax/infoevolveai31@gmail.com", {
+            method: "POST",
+            headers: { Accept: "application/json" },
+            body: data,
+          });
+        }
+      } catch {
+        // fall through — the success panel still points them to DM as a backup
+      } finally {
+        showDone();
+      }
     };
     if (f) f.addEventListener("submit", handler);
     return () => { if (f) f.removeEventListener("submit", handler); };
