@@ -96,7 +96,7 @@ export const pricingPlans: PricingPlan[] = [
   },
   {
     name: "Done-For-You Funnel",
-    price: "From [YOUR PRICE]",
+    price: "From $1,500",
     cadence: "one-off build",
     description: "We build your full client-getting machine, end to end.",
     features: [
@@ -111,7 +111,7 @@ export const pricingPlans: PricingPlan[] = [
   },
   {
     name: "Growth Partner",
-    price: "From [YOUR PRICE]",
+    price: "From $900",
     cadence: "/month",
     description: "We run and optimize your funnel so booked calls keep climbing.",
     features: [
