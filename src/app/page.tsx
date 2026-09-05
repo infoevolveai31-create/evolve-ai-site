@@ -7,6 +7,7 @@ export default function Home() {
   useEffect(() => {
     const els = document.querySelectorAll<HTMLElement>(".reveal");
     const reduce = window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+    let fallback: ReturnType<typeof setTimeout> | undefined;
     if (!("IntersectionObserver" in window) || reduce) {
       els.forEach((e) => e.classList.add("in"));
     } else {
@@ -16,6 +17,11 @@ export default function Home() {
         });
       }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
       els.forEach((e) => io.observe(e));
+      // Safety net: never leave a section stuck invisible (e.g. jumped-over anchors)
+      fallback = setTimeout(() => {
+        els.forEach((e) => e.classList.add("in"));
+        io.disconnect();
+      }, 1600);
     }
     const f = document.getElementById("auditForm") as HTMLFormElement | null;
     const done = document.getElementById("formDone");
@@ -47,7 +53,10 @@ export default function Home() {
       }
     };
     if (f) f.addEventListener("submit", handler);
-    return () => { if (f) f.removeEventListener("submit", handler); };
+    return () => {
+      if (f) f.removeEventListener("submit", handler);
+      if (fallback) clearTimeout(fallback);
+    };
   }, []);
 
   return <div dangerouslySetInnerHTML={{ __html: PAGE_HTML }} />;
