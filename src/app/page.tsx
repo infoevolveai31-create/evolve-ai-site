@@ -1,180 +1,33 @@
-import Link from "next/link";
-import { Container } from "@/components/Container";
-import { Button } from "@/components/Button";
-import { Eyebrow, SectionHeading } from "@/components/SectionHeading";
-import { Glow } from "@/components/Glow";
-import { Badge } from "@/components/Badge";
-import { services, faqs } from "@/lib/data";
+"use client";
+import { useEffect } from "react";
+
+const PAGE_HTML = "<style>\n  :root{\n    --bg:#0A0B0D; --surface:#101216; --surface-2:#15181D;\n    --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);\n    --text:#F4F3EE; --muted:#9AA0A8; --faint:#6B7078;\n    --lime:#E6B45C; --lime-dim:#C9973F; --red:#E8654E;\n    --ink:#0A0B0D;\n    --mono:'JetBrains Mono',ui-monospace,monospace;\n    --disp:'Archivo','Arial Narrow',system-ui,sans-serif;\n    --body:'Instrument Sans',system-ui,sans-serif;\n    --wrap:1180px;\n  }\n  *{box-sizing:border-box}\n  html{scroll-behavior:smooth}\n  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);\n    font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}\n  a{color:inherit;text-decoration:none}\n  h1,h2,h3{font-family:var(--disp);margin:0;text-wrap:balance;letter-spacing:-.02em}\n  p{margin:0}\n  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}\n  .eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--lime)}\n  .muted{color:var(--muted)}\n  .lime{color:var(--lime)}\n  .red{color:var(--red)}\n\n  /* buttons */\n  .btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:800;\n    font-size:16px;letter-spacing:-.01em;padding:16px 26px;border-radius:2px;cursor:pointer;\n    border:1px solid transparent;transition:transform .18s ease,background .18s ease,color .18s ease}\n  .btn-primary{background:var(--lime);color:var(--ink)}\n  .btn-primary:hover{transform:translateY(-2px);background:#F2C877}\n  .btn-ghost{background:transparent;color:var(--text);border-color:var(--line-2)}\n  .btn-ghost:hover{border-color:var(--lime);color:var(--lime)}\n  .btn svg{width:18px;height:18px}\n\n  /* nav */\n  header.nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);\n    background:rgba(10,11,13,.72);border-bottom:1px solid var(--line)}\n  .nav-in{display:flex;align-items:center;justify-content:space-between;height:70px}\n  .brand{display:flex;align-items:center;gap:11px;font-family:var(--disp);font-weight:800;\n    letter-spacing:.14em;font-size:16px}\n  .brand .dot{width:14px;height:14px;background:var(--lime);transform:rotate(45deg)}\n  .nav-links{display:flex;align-items:center;gap:30px;font-size:15px;color:var(--muted)}\n  .nav-links a:hover{color:var(--text)}\n  .nav-cta{padding:11px 20px;font-size:14px}\n  @media(max-width:820px){.nav-links{display:none}}\n\n  /* section rhythm */\n  section{padding:104px 0;position:relative}\n  .sec-head{max-width:720px}\n  .sec-head h2{font-weight:900;font-size:clamp(32px,5vw,52px);line-height:1.02;margin-top:18px}\n  .sec-head p{margin-top:20px;color:var(--muted);font-size:19px;max-width:60ch}\n\n  /* hero */\n  .hero{padding:72px 0 96px;border-bottom:1px solid var(--line)}\n  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}\n  .hero h1{font-weight:900;font-size:clamp(44px,7vw,88px);line-height:.96}\n  .hero h1 .stroke{color:transparent;-webkit-text-stroke:2px var(--lime)}\n  .hero-sub{margin-top:26px;font-size:20px;color:var(--muted);max-width:52ch}\n  .hero-cta{margin-top:38px;display:flex;gap:14px;flex-wrap:wrap}\n  .hero-trust{margin-top:34px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;\n    font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}\n  .hero-trust .pip{width:6px;height:6px;border-radius:50%;background:var(--lime)}\n  @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:40px}.hero-visual{order:-1}}\n\n  /* funnel visual */\n  .hero-visual{position:relative;min-height:420px;display:flex;justify-content:center;align-items:center}\n  .funnel-card{width:100%;max-width:420px;background:linear-gradient(180deg,#111318,#0c0e12);\n    border:1px solid var(--line);border-radius:6px;padding:26px 24px 22px;position:relative;overflow:hidden}\n  .funnel-card .cap{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);display:flex;justify-content:space-between}\n  .funnel-svg{width:100%;height:auto;display:block;margin-top:8px}\n  .drop{animation:fall 2.6s linear infinite}\n  .drop.d2{animation-delay:.5s}.drop.d3{animation-delay:1.1s}\n  .drop.d4{animation-delay:1.7s}.drop.d5{animation-delay:2.1s}\n  @keyframes fall{0%{transform:translateY(0);opacity:0}\n    10%{opacity:1}80%{opacity:1}100%{transform:translateY(150px);opacity:0}}\n  .leak{animation:leak 3s ease-in infinite}\n  .leak.l2{animation-delay:1.4s}\n  @keyframes leak{0%{transform:translate(0,0);opacity:0}\n    15%{opacity:1}100%{transform:translate(var(--lx),40px);opacity:0}}\n  .funnel-foot{display:flex;justify-content:space-between;align-items:flex-end;margin-top:14px}\n  .funnel-foot .big{font-family:var(--disp);font-weight:900;font-size:34px;line-height:1;color:var(--lime)}\n  .funnel-foot .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}\n  @media(prefers-reduced-motion:reduce){.drop,.leak{animation:none}}\n\n  /* niche strip */\n  .strip{border-bottom:1px solid var(--line);padding:22px 0}\n  .strip-in{display:flex;gap:38px;flex-wrap:wrap;justify-content:center;align-items:center;\n    font-family:var(--mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}\n  .strip-in span.on{color:var(--muted)}\n\n  /* problem — leak math */\n  .leakmath{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:56px;\n    border:1px solid var(--line);border-radius:6px;overflow:hidden}\n  .leakmath .cell{padding:34px 28px;border-right:1px solid var(--line)}\n  .leakmath .cell:last-child{border-right:none;background:linear-gradient(180deg,rgba(230,180,92,.06),transparent)}\n  .leakmath .n{font-family:var(--disp);font-weight:900;font-size:52px;line-height:1}\n  .leakmath .cell:nth-child(2) .n{color:var(--red)}\n  .leakmath .cell:last-child .n{color:var(--lime)}\n  .leakmath .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-top:14px}\n  .leakmath .d{margin-top:8px;color:var(--muted);font-size:15px}\n  @media(max-width:760px){.leakmath{grid-template-columns:1fr}.leakmath .cell{border-right:none;border-bottom:1px solid var(--line)}}\n\n  /* machine */\n  .machine{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}\n  .parts{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:56px}\n  .part{background:linear-gradient(180deg,#14171c,#101216);border:1px solid var(--line);\n    border-radius:6px;padding:28px 22px;position:relative;display:flex;flex-direction:column;gap:12px;min-height:250px}\n  .part .num{font-family:var(--disp);font-weight:900;font-size:22px;color:var(--lime)}\n  .part h3{font-weight:800;font-size:24px;letter-spacing:-.01em}\n  .part p{color:var(--muted);font-size:15px}\n  .part .miss{margin-top:auto;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--red)}\n  .part .arrow{position:absolute;right:-13px;top:50%;transform:translateY(-50%);z-index:2;color:var(--faint)}\n  .part:last-child .arrow{display:none}\n  @media(max-width:900px){.parts{grid-template-columns:1fr 1fr}.part .arrow{display:none}}\n  @media(max-width:520px){.parts{grid-template-columns:1fr}}\n\n  /* results */\n  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:52px}\n  .stat{border:1px solid var(--line);border-radius:6px;padding:32px 26px;background:var(--surface)}\n  .stat .big{font-family:var(--disp);font-weight:900;font-size:clamp(42px,6vw,60px);line-height:1;color:var(--lime)}\n  .stat .lbl{margin-top:14px;color:var(--muted);font-size:15px}\n  .example{margin-top:26px;border-left:2px solid var(--lime);padding:6px 0 6px 22px;max-width:60ch;color:var(--muted)}\n  .example b{color:var(--text);font-weight:600}\n  .note{margin-top:16px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}\n  @media(max-width:760px){.stats{grid-template-columns:1fr}}\n\n  /* steps */\n  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px}\n  .step{padding:30px 26px;border:1px solid var(--line);border-radius:6px;background:var(--surface-2)}\n  .step .s{font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--lime)}\n  .step h3{font-weight:800;font-size:23px;margin-top:16px}\n  .step p{margin-top:12px;color:var(--muted);font-size:15px}\n  @media(max-width:760px){.steps{grid-template-columns:1fr}}\n\n  /* faq */\n  .faq{max-width:820px;margin-top:44px}\n  details{border-bottom:1px solid var(--line);padding:6px 0}\n  summary{cursor:pointer;list-style:none;padding:22px 4px;font-family:var(--disp);font-weight:700;\n    font-size:20px;display:flex;justify-content:space-between;align-items:center;gap:20px}\n  summary::-webkit-details-marker{display:none}\n  summary .pl{color:var(--lime);font-weight:800;font-size:24px;transition:transform .2s}\n  details[open] summary .pl{transform:rotate(45deg)}\n  details p{padding:0 4px 22px;color:var(--muted);max-width:70ch}\n\n  /* CTA + form */\n  .cta{background:linear-gradient(180deg,#0d0f13,#0a0b0d);border-top:1px solid var(--line)}\n  .cta-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}\n  .cta h2{font-weight:900;font-size:clamp(34px,5vw,56px);line-height:1.0}\n  .cta-sub{margin-top:20px;color:var(--muted);font-size:19px;max-width:46ch}\n  .cta-alt{margin-top:26px;font-size:15px;color:var(--faint)}\n  .cta-alt b{color:var(--text)}\n  form{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:30px}\n  .field{margin-bottom:16px}\n  label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}\n  input,select{width:100%;background:var(--bg);border:1px solid var(--line-2);border-radius:4px;\n    color:var(--text);font-family:var(--body);font-size:16px;padding:13px 14px;outline:none;transition:border .15s}\n  input:focus,select:focus{border-color:var(--lime)}\n  form .btn{width:100%;justify-content:center;margin-top:8px}\n  .form-done{display:none;text-align:center;padding:14px 4px}\n  .form-done .tick{width:56px;height:56px;border-radius:50%;background:rgba(230,180,92,.14);\n    display:flex;align-items:center;justify-content:center;margin:0 auto 18px}\n  .form-done h3{font-weight:800;font-size:26px}\n  .form-done p{margin-top:12px;color:var(--muted)}\n  @media(max-width:900px){.cta-grid{grid-template-columns:1fr;gap:36px}}\n\n  /* footer */\n  footer{border-top:1px solid var(--line);padding:52px 0 40px}\n  .foot-in{display:flex;justify-content:space-between;align-items:flex-start;gap:30px;flex-wrap:wrap}\n  .foot-in .muted{font-size:14px;max-width:34ch}\n  .foot-links{display:flex;gap:26px;font-size:14px;color:var(--muted);flex-wrap:wrap}\n  .foot-links a:hover{color:var(--lime)}\n  .foot-bottom{margin-top:36px;padding-top:22px;border-top:1px solid var(--line);\n    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;\n    font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}\n\n  .reveal{opacity:1}\n  @media(prefers-reduced-motion:no-preference){\n    .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}\n    .reveal.in{opacity:1;transform:none}\n  }\n</style>\n\n<header class=\"nav\">\n  <div class=\"wrap nav-in\">\n    <a class=\"brand\" href=\"#top\"><span class=\"dot\"></span>EVOLVE&nbsp;AI</a>\n    <nav class=\"nav-links\">\n      <a href=\"#problem\">The Problem</a>\n      <a href=\"#machine\">The System</a>\n      <a href=\"#results\">Results</a>\n      <a href=\"#how\">How It Works</a>\n    </nav>\n    <a class=\"btn btn-primary nav-cta\" href=\"https://ig.me/m/automation_by_abhi\" target=\"_blank\" rel=\"noopener\">Free audit</a>\n  </div>\n</header>\n\n<main id=\"top\">\n\n  <!-- HERO -->\n  <section class=\"hero\">\n    <div class=\"wrap hero-grid\">\n      <div>\n        <span class=\"eyebrow\">Done-for-you funnels · for online coaches</span>\n        <h1>More clients.<br>Without posting<br><span class=\"stroke\">more.</span></h1>\n        <p class=\"hero-sub\">You already get the attention. EVOLVE AI builds the system that turns your followers into booked calls — automatically.</p>\n        <div class=\"hero-cta\">\n          <a class=\"btn btn-primary\" href=\"https://ig.me/m/automation_by_abhi\" target=\"_blank\" rel=\"noopener\">\n            Get your free funnel audit\n            <svg viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M4 12h14M12 5l7 7-7 7\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n          </a>\n          <a class=\"btn btn-ghost\" href=\"#machine\">See how it works</a>\n        </div>\n        <div class=\"hero-trust\">\n          <span class=\"pip\"></span> Fitness &nbsp;·&nbsp; Business &nbsp;·&nbsp; Mindset &nbsp;·&nbsp; Life coaches &nbsp;·&nbsp; worldwide\n        </div>\n      </div>\n\n      <div class=\"hero-visual\">\n        <div class=\"funnel-card\">\n          <div class=\"cap\"><span>Your audience</span><span>Booked calls</span></div>\n          <svg class=\"funnel-svg\" viewBox=\"0 0 300 220\" fill=\"none\" aria-hidden=\"true\">\n            <!-- funnel body -->\n            <path d=\"M30 34 H270 L188 150 V196 H112 V150 Z\" fill=\"rgba(230,180,92,.05)\" stroke=\"rgba(255,255,255,.14)\" stroke-width=\"1.5\"/>\n            <line x1=\"30\" y1=\"34\" x2=\"270\" y2=\"34\" stroke=\"var(--lime)\" stroke-width=\"2.5\"/>\n            <!-- falling converting drops (lime) -->\n            <circle class=\"drop\" cx=\"150\" cy=\"40\" r=\"5\" fill=\"var(--lime)\"/>\n            <circle class=\"drop d3\" cx=\"150\" cy=\"40\" r=\"5\" fill=\"var(--lime)\"/>\n            <circle class=\"drop d5\" cx=\"150\" cy=\"40\" r=\"5\" fill=\"var(--lime)\"/>\n            <!-- leaking drops (red) out the sides -->\n            <circle class=\"leak\" style=\"--lx:-46px\" cx=\"70\" cy=\"70\" r=\"4.5\" fill=\"var(--red)\"/>\n            <circle class=\"leak l2\" style=\"--lx:48px\" cx=\"232\" cy=\"86\" r=\"4.5\" fill=\"var(--red)\"/>\n            <!-- collected pool -->\n            <rect x=\"112\" y=\"188\" width=\"76\" height=\"8\" rx=\"2\" fill=\"var(--lime)\"/>\n          </svg>\n          <div class=\"funnel-foot\">\n            <div><div class=\"big\">100</div><div class=\"lbl\">saw you</div></div>\n            <div style=\"text-align:right\"><div class=\"big\">8</div><div class=\"lbl\">booked ✓</div></div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </section>\n\n  <!-- NICHE STRIP -->\n  <div class=\"strip\">\n    <div class=\"wrap strip-in\">\n      <span>Built for coaches who</span>\n      <span class=\"on\">get engagement</span>·<span class=\"on\">but not enough calls</span>·<span class=\"on\">hate DM ping-pong</span>·<span class=\"on\">want it automated</span>\n    </div>\n  </div>\n\n  <!-- PROBLEM -->\n  <section id=\"problem\">\n    <div class=\"wrap\">\n      <div class=\"sec-head reveal\">\n        <span class=\"eyebrow\">The real problem</span>\n        <h2>You don't have a traffic problem.<br>You're <span class=\"red\">leaking clients.</span></h2>\n        <p>Coaches obsess over reach. But the drop-off isn't at the top of your funnel — it's between \"interested\" and \"booked.\" Here's what it looks like every month.</p>\n      </div>\n      <div class=\"leakmath reveal\">\n        <div class=\"cell\">\n          <div class=\"n\">100</div>\n          <div class=\"k\">People see you</div>\n          <div class=\"d\">Your content is working. Attention isn't the issue.</div>\n        </div>\n        <div class=\"cell\">\n          <div class=\"n\">40 → 2</div>\n          <div class=\"k\">Interested, then gone</div>\n          <div class=\"d\">A link-in-bio maze, no booking page, zero follow-up. They quietly drift off.</div>\n        </div>\n        <div class=\"cell\">\n          <div class=\"n\">8</div>\n          <div class=\"k\">With a real funnel</div>\n          <div class=\"d\">Same audience, same content — a system that catches every interested lead. 4× the calls.</div>\n        </div>\n      </div>\n    </div>\n  </section>\n\n  <!-- MACHINE -->\n  <section id=\"machine\" class=\"machine\">\n    <div class=\"wrap\">\n      <div class=\"sec-head reveal\">\n        <span class=\"eyebrow\">The framework</span>\n        <h2>The Coach Client Machine</h2>\n        <p>Every coach with a full calendar runs these four parts together. Most coaches run only one — content — and wonder why the clients don't come.</p>\n      </div>\n      <div class=\"parts\">\n        <div class=\"part reveal\">\n          <div class=\"num\">01</div>\n          <h3>Attract</h3>\n          <p>Content &amp; ads that get the right coaches watching — not just anyone who scrolls by.</p>\n          <div class=\"miss\">Miss it → nobody hears about you</div>\n          <div class=\"arrow\"><svg width=\"26\" height=\"26\" viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M4 12h15M13 6l7 6-7 6\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></div>\n        </div>\n        <div class=\"part reveal\">\n          <div class=\"num\">02</div>\n          <h3>Capture</h3>\n          <p>One page. One offer. One button. Turns a viewer into a lead — not a link-in-bio dump.</p>\n          <div class=\"miss\">Miss it → wasted reach</div>\n          <div class=\"arrow\"><svg width=\"26\" height=\"26\" viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M4 12h15M13 6l7 6-7 6\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></div>\n        </div>\n        <div class=\"part reveal\">\n          <div class=\"num\">03</div>\n          <h3>Convert</h3>\n          <p>A booking flow that fills your calendar in two taps — plus auto-reminders that kill no-shows.</p>\n          <div class=\"miss\">Miss it → DM ping-pong &amp; ghosts</div>\n          <div class=\"arrow\"><svg width=\"26\" height=\"26\" viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M4 12h15M13 6l7 6-7 6\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></div>\n        </div>\n        <div class=\"part reveal\">\n          <div class=\"num\">04</div>\n          <h3>Follow-up</h3>\n          <p>Automated follow-up that closes the 80% who don't say yes on day one — while you sleep.</p>\n          <div class=\"miss\">Miss it → your income leaks here</div>\n        </div>\n      </div>\n    </div>\n  </section>\n\n  <!-- RESULTS -->\n  <section id=\"results\">\n    <div class=\"wrap\">\n      <div class=\"sec-head reveal\">\n        <span class=\"eyebrow\">What the system does</span>\n        <h2>Same audience.<br>More booked calls.</h2>\n        <p>When the four parts connect, the numbers move without a single extra follower.</p>\n      </div>\n      <div class=\"stats reveal\">\n        <div class=\"stat\"><div class=\"big\">4→11</div><div class=\"lbl\">Booked calls per month, after plugging the funnel leaks.</div></div>\n        <div class=\"stat\"><div class=\"big\">2.7×</div><div class=\"lbl\">More calls from the exact same reach and content.</div></div>\n        <div class=\"stat\"><div class=\"big\">&lt;60s</div><div class=\"lbl\">Reply time to every new lead — fully automated.</div></div>\n      </div>\n      <div class=\"example reveal\">\n        <b>Representative example:</b> a coach with ~8k followers posting 5× a week was booking 3–4 calls a month. We changed zero posts — just added a landing page, a booking flow, and automatic follow-up. Next 30 days: 11 booked calls.\n      </div>\n      <div class=\"note reveal\">Illustrative figures — real client results shown here as they're collected.</div>\n    </div>\n  </section>\n\n  <!-- HOW -->\n  <section id=\"how\" class=\"machine\">\n    <div class=\"wrap\">\n      <div class=\"sec-head reveal\">\n        <span class=\"eyebrow\">How it works</span>\n        <h2>From audit to booked calls in 3 steps.</h2>\n      </div>\n      <div class=\"steps\">\n        <div class=\"step reveal\">\n          <div class=\"s\">STEP 01</div>\n          <h3>Free funnel audit</h3>\n          <p>I map your current setup the way a lead sees it and show you exactly where you're losing clients — free, no pitch.</p>\n        </div>\n        <div class=\"step reveal\">\n          <div class=\"s\">STEP 02</div>\n          <h3>We build your machine</h3>\n          <p>Done-for-you: landing page, booking flow, and automated follow-up — wired into the tools you already use.</p>\n        </div>\n        <div class=\"step reveal\">\n          <div class=\"s\">STEP 03</div>\n          <h3>Your calendar fills</h3>\n          <p>The same content you're already posting starts converting. You show up to booked calls — the system runs 24/7.</p>\n        </div>\n      </div>\n    </div>\n  </section>\n\n  <!-- FAQ -->\n  <section id=\"faq\">\n    <div class=\"wrap\">\n      <div class=\"sec-head reveal\">\n        <span class=\"eyebrow\">Questions</span>\n        <h2>Good questions, straight answers.</h2>\n      </div>\n      <div class=\"faq reveal\">\n        <details open><summary>Do I need more followers first?<span class=\"pl\">+</span></summary>\n          <p>No. This is built to convert the audience you already have. If you're getting engagement but not enough booked calls, you have enough traffic — you have a leak.</p></details>\n        <details><summary>What exactly do you build?<span class=\"pl\">+</span></summary>\n          <p>A landing page that captures leads, a booking flow that fills your calendar, and automated follow-up that closes the people who don't book on day one. Done-for-you, wired into your existing tools.</p></details>\n        <details><summary>What does it cost?<span class=\"pl\">+</span></summary>\n          <p>The funnel audit is free. Build pricing depends on scope — we cover it on the call once I've seen your setup. No obligation.</p></details>\n        <details><summary>What kind of coaches is this for?<span class=\"pl\">+</span></summary>\n          <p>Online coaches — fitness, business, mindset, life — who are getting attention but leaking clients between the post and the booked call.</p></details>\n        <details><summary>How do I start?<span class=\"pl\">+</span></summary>\n          <p>Message me \"CLIENTS\" on Instagram, or fill in the form below. I'll audit your funnel and show you where the calls are leaking — free.</p></details>\n      </div>\n    </div>\n  </section>\n\n  <!-- CTA + FORM -->\n  <section class=\"cta\" id=\"book\">\n    <div class=\"wrap cta-grid\">\n      <div class=\"reveal\">\n        <span class=\"eyebrow\">Your move</span>\n        <h2>Find out where you're leaking clients.</h2>\n        <p class=\"cta-sub\">Get a free funnel audit. I'll map your setup and show you exactly what to fix to book more calls — with the audience you already have.</p>\n        <p class=\"cta-alt\">Prefer instant? <b>DM \"CLIENTS\"</b> to <b>@automation_by_abhi</b> on Instagram.</p>\n      </div>\n      <div class=\"reveal\">\n        <form id=\"auditForm\" novalidate>\n          <div class=\"field\">\n            <label for=\"name\">Your name</label>\n            <input id=\"name\" name=\"name\" type=\"text\" autocomplete=\"name\" placeholder=\"First name\" required>\n          </div>\n          <div class=\"field\">\n            <label for=\"ig\">Instagram handle</label>\n            <input id=\"ig\" name=\"ig\" type=\"text\" placeholder=\"@yourhandle\" required>\n          </div>\n          <div class=\"field\">\n            <label for=\"niche\">What do you coach?</label>\n            <select id=\"niche\" name=\"niche\" required>\n              <option value=\"\" disabled selected>Choose one…</option>\n              <option>Fitness / health</option>\n              <option>Business / money</option>\n              <option>Mindset / life</option>\n              <option>Relationships</option>\n              <option>Other</option>\n            </select>\n          </div>\n          <button class=\"btn btn-primary\" type=\"submit\">Get my free audit\n            <svg viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M4 12h14M12 5l7 7-7 7\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>\n          </button>\n        </form>\n        <div class=\"form-done\" id=\"formDone\">\n          <div class=\"tick\"><svg width=\"26\" height=\"26\" viewBox=\"0 0 24 24\" fill=\"none\"><path d=\"M5 13l4 4L19 7\" stroke=\"var(--lime)\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></div>\n          <h3>You're in. 🎉</h3>\n          <p>I'll DM you on Instagram with your audit shortly. Want it faster? Message me <b>\"CLIENTS\"</b> right now.</p>\n          <a class=\"btn btn-primary\" style=\"margin-top:20px\" href=\"https://ig.me/m/automation_by_abhi\" target=\"_blank\" rel=\"noopener\">Open Instagram DM</a>\n        </div>\n      </div>\n    </div>\n  </section>\n\n</main>\n\n<footer>\n  <div class=\"wrap\">\n    <div class=\"foot-in\">\n      <div>\n        <a class=\"brand\" href=\"#top\" style=\"margin-bottom:14px\"><span class=\"dot\"></span>EVOLVE&nbsp;AI</a>\n        <p class=\"muted\">Done-for-you funnels that turn online coaches' followers into booked calls — worldwide.</p>\n      </div>\n      <div class=\"foot-links\">\n        <a href=\"#problem\">The Problem</a>\n        <a href=\"#machine\">The System</a>\n        <a href=\"#results\">Results</a>\n        <a href=\"#how\">How It Works</a>\n        <a href=\"https://ig.me/m/automation_by_abhi\" target=\"_blank\" rel=\"noopener\">Instagram</a>\n      </div>\n    </div>\n    <div class=\"foot-bottom\">\n      <span>© EVOLVE AI · Funnels for Coaches</span>\n      <span>Free funnel audit → DM \"CLIENTS\"</span>\n    </div>\n  </div>\n</footer>";
 
 export default function Home() {
-  return (
-    <>
-      {/* HERO */}
-      <section className="relative overflow-hidden bg-grid">
-        <Glow className="h-[500px] w-[500px] bg-teal/20 -top-40 -left-40" />
-        <Glow className="h-[500px] w-[500px] bg-indigo/20 top-20 right-0" />
-        <Container className="relative pt-20 pb-24 sm:pt-28 sm:pb-32">
-          <div className="flex flex-col items-center text-center gap-8 max-w-4xl mx-auto">
-            <Eyebrow>Applied AI Studio</Eyebrow>
-            <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.05]">
-              Intelligent automation,{" "}
-              <span className="text-gradient">built for your business.</span>
-            </h1>
-            <p className="text-lg sm:text-xl text-fg-muted max-w-2xl leading-relaxed">
-              Evolve AI designs, builds, and operates custom AI agents and
-              automation for companies who need real results — not another pilot
-              project that stalls in committee.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
-              <Button href="/contact" size="lg">
-                Book a strategy call
-              </Button>
-              <Button href="/services" variant="secondary" size="lg">
-                See what we do
-              </Button>
-            </div>
-          </div>
-        </Container>
-      </section>
+  useEffect(() => {
+    const els = document.querySelectorAll<HTMLElement>(".reveal");
+    const reduce = window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+    if (!("IntersectionObserver" in window) || reduce) {
+      els.forEach((e) => e.classList.add("in"));
+    } else {
+      const io = new IntersectionObserver((ents) => {
+        ents.forEach((en) => {
+          if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+      els.forEach((e) => io.observe(e));
+    }
+    const f = document.getElementById("auditForm") as HTMLFormElement | null;
+    const done = document.getElementById("formDone");
+    const handler = (ev: Event) => {
+      ev.preventDefault();
+      if (f && !f.checkValidity()) { f.reportValidity(); return; }
+      if (f) f.style.display = "none";
+      if (done) done.style.display = "block";
+    };
+    if (f) f.addEventListener("submit", handler);
+    return () => { if (f) f.removeEventListener("submit", handler); };
+  }, []);
 
-      {/* SERVICES OVERVIEW */}
-      <section className="py-28">
-        <Container>
-          <SectionHeading
-            eyebrow="What we do"
-            title="From first strategy call to production AI, end to end."
-            description="We work as an embedded partner across strategy, engineering, and operations — so AI initiatives ship and keep working."
-          />
-          <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {services.map((s) => (
-              <Link
-                key={s.slug}
-                href="/services"
-                className="group flex flex-col gap-4 rounded-2xl border border-border bg-bg-elevated p-6 hover:border-teal/40 transition-colors"
-              >
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-teal/20 to-blue/20 text-teal">
-                  <IconDot />
-                </div>
-                <h3 className="font-display text-lg font-semibold text-fg">{s.name}</h3>
-                <p className="text-sm text-fg-muted leading-relaxed">{s.summary}</p>
-                <span className="mt-auto inline-flex items-center gap-1 text-sm font-medium text-teal opacity-0 group-hover:opacity-100 transition-opacity">
-                  Learn more →
-                </span>
-              </Link>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* PRODUCT TEASER */}
-      <section className="py-28 border-y border-border bg-bg-elevated/30 overflow-hidden">
-        <Container>
-          <div className="grid items-center gap-16 lg:grid-cols-2">
-            <div className="flex flex-col gap-6">
-              <Badge>The Evolve AI Platform</Badge>
-              <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight">
-                One workspace to build, ship, and monitor every AI agent you run.
-              </h2>
-              <p className="text-fg-muted leading-relaxed">
-                Our platform gives your team the same infrastructure our engineers
-                use to ship client work — agent orchestration, observability, and
-                guardrails, without stitching together a dozen tools.
-              </p>
-              <ul className="flex flex-col gap-3">
-                {["Visual agent builder", "Real-time cost & performance monitoring", "Built-in approval workflows"].map(
-                  (f) => (
-                    <li key={f} className="flex items-center gap-3 text-sm text-fg">
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-teal/15 text-teal text-xs">
-                        ✓
-                      </span>
-                      {f}
-                    </li>
-                  )
-                )}
-              </ul>
-              <div>
-                <Button href="/product" variant="secondary">
-                  Explore the platform
-                </Button>
-              </div>
-            </div>
-            <div className="relative">
-              <Glow className="h-[380px] w-[380px] bg-blue/25 top-0 right-0" />
-              <div className="relative rounded-2xl border border-border bg-bg-elevated-2 p-2 shadow-2xl animate-float">
-                <div className="flex items-center gap-1.5 border-b border-border px-4 py-3">
-                  <span className="h-2.5 w-2.5 rounded-full bg-fg-faint/40" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-fg-faint/40" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-fg-faint/40" />
-                </div>
-                <div className="p-6 flex flex-col gap-4">
-                  <div className="h-4 w-2/3 rounded bg-gradient-to-r from-teal/30 to-blue/30" />
-                  <div className="grid grid-cols-3 gap-3">
-                    {Array.from({ length: 6 }).map((_, i) => (
-                      <div key={i} className="h-16 rounded-lg border border-border bg-bg" />
-                    ))}
-                  </div>
-                  <div className="h-24 rounded-lg border border-border bg-bg flex items-center justify-center">
-                    <span className="text-xs text-fg-faint">Agent execution trace</span>
-                  </div>
-                  <div className="flex gap-3">
-                    <div className="h-8 flex-1 rounded-full bg-bg border border-border" />
-                    <div className="h-8 w-20 rounded-full bg-gradient-to-r from-teal to-blue" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* FAQ */}
-      <section className="py-28">
-        <Container className="max-w-4xl">
-          <SectionHeading eyebrow="Questions" title="Frequently asked questions" />
-          <div className="mt-14 flex flex-col divide-y divide-border border-y border-border">
-            {faqs.map((f) => (
-              <details key={f.question} className="group py-6">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium text-fg">
-                  {f.question}
-                  <span className="shrink-0 text-fg-faint transition-transform group-open:rotate-45 text-xl leading-none">
-                    +
-                  </span>
-                </summary>
-                <p className="mt-4 text-sm text-fg-muted leading-relaxed">{f.answer}</p>
-              </details>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* CTA */}
-      <section className="pb-28">
-        <Container>
-          <div className="relative overflow-hidden rounded-3xl border border-border bg-bg-elevated p-12 sm:p-16 text-center">
-            <Glow className="h-[400px] w-[400px] bg-teal/20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-            <div className="relative flex flex-col items-center gap-6">
-              <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight max-w-2xl">
-                Ready to see where AI actually moves the needle for you?
-              </h2>
-              <p className="text-fg-muted max-w-xl">
-                Book a 30-minute strategy call. We&apos;ll come with a point of view, not a sales script.
-              </p>
-              <Button href="/contact" size="lg">
-                Book a strategy call
-              </Button>
-            </div>
-          </div>
-        </Container>
-      </section>
-    </>
-  );
-}
-
-function IconDot() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-      <circle cx="10" cy="10" r="8" stroke="currentColor" strokeWidth="1.6" />
-      <circle cx="10" cy="10" r="3" fill="currentColor" />
-    </svg>
-  );
+  return <div dangerouslySetInnerHTML={{ __html: PAGE_HTML }} />;
 }

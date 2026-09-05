@@ -1,16 +1,11 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: {
-    default: "Evolve AI — Intelligent Automation for Modern Teams",
-    template: "%s | Evolve AI",
-  },
+  title: "EVOLVE AI — Funnels for Coaches",
   description:
-    "Evolve AI designs, builds, and operates custom AI agents and automation that plug into your business — from strategy to production.",
+    "Done-for-you funnels that turn online coaches' followers into booked calls. Get a free funnel audit.",
 };
 
 export default function RootLayout({
@@ -19,19 +14,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full">
+    <html lang="en">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-full flex flex-col bg-bg text-fg antialiased">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+      <body>
+        {children}
         <Analytics />
       </body>
     </html>
