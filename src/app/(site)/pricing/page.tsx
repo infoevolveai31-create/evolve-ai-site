@@ -7,7 +7,7 @@ import { pricingPlans, faqs } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Pricing",
-  description: "Engagement tiers for Evolve AI's applied AI services and platform.",
+  description: "Simple pricing for done-for-you coach funnels. Start with a free funnel audit.",
 };
 
 export default function PricingPage() {
@@ -19,11 +19,11 @@ export default function PricingPage() {
           <div className="mx-auto max-w-3xl flex flex-col items-center gap-6">
             <Eyebrow>Pricing</Eyebrow>
             <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.05]">
-              Straightforward engagement tiers.
+              Start free. Scale when it works.
             </h1>
             <p className="text-lg text-fg-muted leading-relaxed max-w-2xl">
-              Every engagement starts with a scoping call so pricing reflects your
-              actual needs — these tiers are a starting point, not a rigid menu.
+              Every coach starts with a free funnel audit — no pitch. Build and
+              retainer pricing is set once we&apos;ve seen your setup on the call.
             </p>
           </div>
         </Container>
@@ -98,10 +98,10 @@ export default function PricingPage() {
             <Glow className="h-[400px] w-[400px] bg-teal/20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
             <div className="relative flex flex-col items-center gap-6">
               <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight max-w-2xl">
-                Not sure which tier fits? We&apos;ll help you figure it out.
+                Not sure where to start? Get a free funnel audit.
               </h2>
               <Button href="/contact" size="lg">
-                Talk to sales
+                Get your free audit
               </Button>
             </div>
           </div>

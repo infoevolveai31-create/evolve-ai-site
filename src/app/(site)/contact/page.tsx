@@ -6,7 +6,7 @@ import { ContactForm } from "@/components/ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Get in touch with Evolve AI to discuss AI strategy, automation, or platform access.",
+  description: "Get a free funnel audit for your coaching business. Book a call or send a message.",
 };
 
 const info = [
@@ -22,11 +22,11 @@ export default function ContactPage() {
         <div className="max-w-2xl">
           <Eyebrow>Contact</Eyebrow>
           <h1 className="mt-6 font-display text-4xl sm:text-5xl font-bold tracking-tight leading-[1.05]">
-            Let&apos;s talk about what AI could actually do for you.
+            Get your free funnel audit.
           </h1>
           <p className="mt-6 text-lg text-fg-muted leading-relaxed">
-            Book a 30-minute strategy call, or send a note below and we&apos;ll
-            follow up within one business day.
+            Book a 30-minute call, or send a note below and we&apos;ll show you
+            exactly where you&apos;re losing clients — within one business day.
           </p>
         </div>
 

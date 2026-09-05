@@ -127,8 +127,8 @@ export function Footer() {
           <div className="col-span-2 flex flex-col gap-4">
             <Logo />
             <p className="text-sm text-fg-muted max-w-xs leading-relaxed">
-              Evolve AI designs, builds, and operates AI agents and automation
-              for teams that need results, not experiments.
+              Done-for-you funnels that turn online coaches&apos; followers into
+              booked calls — worldwide.
             </p>
             <div className="flex items-center gap-3 pt-1">
               {socials.map((s) => (
@@ -160,9 +160,9 @@ export function Footer() {
             </div>
           ))}
           <div className="col-span-2 lg:col-span-2 flex flex-col gap-3">
-            <h4 className="text-sm font-semibold text-fg">Stay in the loop</h4>
+            <h4 className="text-sm font-semibold text-fg">Get more clients</h4>
             <p className="text-sm text-fg-muted">
-              Get occasional notes on applied AI, sent when we have something worth saying.
+              Occasional funnel + lead-gen tips for online coaches. No fluff.
             </p>
             <NewsletterForm />
           </div>

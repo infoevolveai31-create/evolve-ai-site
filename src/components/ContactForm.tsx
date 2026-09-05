@@ -25,7 +25,7 @@ export function ContactForm() {
         setStatus("submitting");
         const form = e.currentTarget;
         const data = new FormData(form);
-        data.append("_subject", "New enquiry from theevolveai.com");
+        data.append("_subject", "New funnel-audit request from theevolveai.com");
         data.append("_captcha", "false");
         data.append("_template", "table");
 
@@ -62,40 +62,40 @@ export function ContactForm() {
         </div>
         <div className="flex flex-col gap-2">
           <label className="text-sm font-medium text-fg" htmlFor="email">
-            Work email
+            Email
           </label>
           <input
             id="email"
             name="email"
             required
             type="email"
-            placeholder="jane@company.com"
+            placeholder="you@email.com"
             className="rounded-xl border border-border bg-bg px-4 py-3 text-sm text-fg placeholder:text-fg-faint focus:outline-none focus:border-teal/50"
           />
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        <label className="text-sm font-medium text-fg" htmlFor="company">
-          Company
+        <label className="text-sm font-medium text-fg" htmlFor="instagram">
+          Instagram handle
         </label>
         <input
-          id="company"
-          name="company"
+          id="instagram"
+          name="instagram"
           type="text"
-          placeholder="Company, Inc."
+          placeholder="@yourhandle"
           className="rounded-xl border border-border bg-bg px-4 py-3 text-sm text-fg placeholder:text-fg-faint focus:outline-none focus:border-teal/50"
         />
       </div>
       <div className="flex flex-col gap-2">
         <label className="text-sm font-medium text-fg" htmlFor="message">
-          What are you looking to solve?
+          What do you coach, and what&apos;s your goal?
         </label>
         <textarea
           id="message"
           name="message"
           required
           rows={5}
-          placeholder="Tell us a bit about the workflow or problem you have in mind..."
+          placeholder="e.g. I'm a fitness coach getting leads from Instagram but not enough booked calls..."
           className="resize-none rounded-xl border border-border bg-bg px-4 py-3 text-sm text-fg placeholder:text-fg-faint focus:outline-none focus:border-teal/50"
         />
       </div>
@@ -113,7 +113,7 @@ export function ContactForm() {
         disabled={status === "submitting"}
         className="mt-2 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-teal to-blue px-6 py-3.5 text-sm font-semibold text-[#06140f] hover:brightness-110 transition disabled:opacity-60 disabled:cursor-not-allowed"
       >
-        {status === "submitting" ? "Sending..." : "Send message"}
+        {status === "submitting" ? "Sending..." : "Get my free audit"}
       </button>
     </form>
   );

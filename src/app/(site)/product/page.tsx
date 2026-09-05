@@ -7,11 +7,11 @@ import { Badge } from "@/components/Badge";
 import { productFeatures } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "Product",
-  description: "The Evolve AI platform: build, ship, and monitor AI agents from one workspace.",
+  title: "The System",
+  description: "The Coach Client Machine: the 4-part funnel system that turns followers into booked calls.",
 };
 
-const integrations = ["Salesforce", "HubSpot", "Slack", "Snowflake", "Zendesk", "Notion", "Postgres", "SAP"];
+const integrations = ["Instagram", "Calendly", "GoHighLevel", "Stripe", "WhatsApp", "Kajabi", "Zapier", "Gmail"];
 
 export default function ProductPage() {
   return (
@@ -20,21 +20,21 @@ export default function ProductPage() {
         <Glow className="h-[460px] w-[460px] bg-blue/20 -top-40 right-0" />
         <Container className="relative pt-20 pb-16 sm:pt-28">
           <div className="max-w-3xl">
-            <Eyebrow>The Evolve AI Platform</Eyebrow>
+            <Eyebrow>The Coach Client Machine</Eyebrow>
             <h1 className="mt-6 font-display text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.05]">
-              The workspace behind every agent we ship.
+              The system behind a full coaching calendar.
             </h1>
             <p className="mt-6 text-lg text-fg-muted leading-relaxed max-w-2xl">
-              Build, evaluate, and operate AI agents with the same infrastructure
-              our engineers use for client work — orchestration, observability,
-              and guardrails included.
+              Four parts working together — Attract, Capture, Convert, Follow-up —
+              that turn the followers you already have into booked calls. Miss one
+              and clients leak out.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
               <Button href="/contact" size="lg">
-                Request a demo
+                Get your free audit
               </Button>
               <Button href="/pricing" variant="secondary" size="lg">
-                View pricing
+                See pricing
               </Button>
             </div>
           </div>
@@ -44,11 +44,11 @@ export default function ProductPage() {
               <span className="h-2.5 w-2.5 rounded-full bg-fg-faint/40" />
               <span className="h-2.5 w-2.5 rounded-full bg-fg-faint/40" />
               <span className="h-2.5 w-2.5 rounded-full bg-fg-faint/40" />
-              <span className="ml-3 text-xs text-fg-faint">app.evolveai.com/workspace</span>
+              <span className="ml-3 text-xs text-fg-faint">theevolveai.com/dashboard</span>
             </div>
             <div className="grid gap-4 p-6 sm:grid-cols-4">
               <div className="sm:col-span-1 flex flex-col gap-2">
-                {["Agents", "Workflows", "Evaluations", "Integrations", "Settings"].map((n, i) => (
+                {["Leads", "Bookings", "Follow-ups", "Funnels", "Reports"].map((n, i) => (
                   <div
                     key={n}
                     className={`rounded-lg px-3 py-2 text-xs ${
@@ -80,9 +80,9 @@ export default function ProductPage() {
       <section className="py-24">
         <Container>
           <SectionHeading
-            eyebrow="Capabilities"
-            title="Everything you need to run AI in production"
-            description="Not a prototyping toy — infrastructure built to survive real usage, real edge cases, and real audits."
+            eyebrow="The 4 parts"
+            title="Everything a full calendar actually needs"
+            description="Most coaches run only one part — content — and wonder why the clients don't come. Here's the whole machine."
           />
           <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {productFeatures.map((f) => (
@@ -102,17 +102,17 @@ export default function ProductPage() {
         <Container>
           <div className="grid items-center gap-16 lg:grid-cols-2">
             <div className="flex flex-col gap-6">
-              <Badge>Works with your stack</Badge>
+              <Badge>Works with your tools</Badge>
               <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight">
-                Pre-built connectors for the tools you already run.
+                Wired into the tools coaches already use.
               </h2>
               <p className="text-fg-muted leading-relaxed">
-                Connect in minutes, not sprints. And if you use something niche,
-                our SDK makes custom connectors straightforward to build.
+                We plug your funnel into Instagram, your calendar, your payment and
+                CRM — so leads flow from a DM to a booked call without you lifting a finger.
               </p>
               <div>
                 <Button href="/contact" variant="secondary">
-                  See all integrations
+                  Get your free audit
                 </Button>
               </div>
             </div>
@@ -136,13 +136,13 @@ export default function ProductPage() {
             <Glow className="h-[400px] w-[400px] bg-teal/20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
             <div className="relative flex flex-col items-center gap-6">
               <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight max-w-2xl">
-                See the platform on your own data.
+                See the system mapped to your funnel.
               </h2>
               <p className="text-fg-muted max-w-xl">
-                We&apos;ll walk through a live workspace and show how a real workflow of yours could run on it.
+                We&apos;ll audit your setup live and show you which part of the machine you&apos;re missing — free.
               </p>
               <Button href="/contact" size="lg">
-                Request a demo
+                Get your free audit
               </Button>
             </div>
           </div>

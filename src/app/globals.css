@@ -9,10 +9,10 @@
   --color-fg: #f4f5f9;
   --color-fg-muted: #9195ab;
   --color-fg-faint: #5c5f75;
-  --color-teal: #17d9a3;
-  --color-teal-soft: #0fae82;
-  --color-blue: #3b82f6;
-  --color-indigo: #6366f1;
+  --color-teal: #e6b45c;
+  --color-teal-soft: #c9973f;
+  --color-blue: #e6b45c;
+  --color-indigo: #d9a24a;
 }
 
 @theme inline {
@@ -52,7 +52,7 @@ body {
 }
 
 .text-gradient {
-  background: linear-gradient(100deg, #17d9a3 0%, #3b82f6 55%, #6366f1 100%);
+  background: linear-gradient(100deg, #f2c877 0%, #e6b45c 55%, #c9973f 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

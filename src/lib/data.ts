@@ -9,58 +9,62 @@ export type Service = {
 
 export const services: Service[] = [
   {
-    slug: "ai-strategy",
-    name: "AI Strategy & Roadmapping",
-    summary: "Find the highest-leverage places to apply AI in your business, backed by a plan your team can actually execute.",
+    slug: "funnel-build",
+    name: "Funnel & Landing Pages",
+    summary:
+      "One clear page that turns a viewer into a lead — instead of a link-in-bio maze that loses most of them.",
     description:
-      "We start every engagement with a deep audit of your workflows, data, and tooling. You get a prioritized roadmap that ranks opportunities by ROI and feasibility, not hype.",
+      "We build the page your interested followers actually land on: one promise, one offer, one button. Designed to convert coaching traffic into booked calls, not just look pretty.",
     bullets: [
-      "Process & data readiness audit",
-      "Opportunity sizing and ROI modeling",
-      "12-month implementation roadmap",
-      "Build vs. buy recommendations",
+      "High-converting landing / opt-in page",
+      "One clear offer and call-to-action",
+      "Mobile-first, fast-loading design",
+      "Wired to your booking calendar",
     ],
     icon: "compass",
   },
   {
-    slug: "custom-automation",
-    name: "Custom Automation & Agents",
-    summary: "Bespoke AI agents and workflow automation that plug into your existing stack and remove manual work at the root.",
+    slug: "lead-capture",
+    name: "Lead Capture & Booking",
+    summary:
+      "A booking flow that fills your calendar in two taps — no DM ping-pong, no lost leads.",
     description:
-      "Our engineers design and ship production-grade automations — from document processing to autonomous multi-step agents — tailored to your systems, not a generic template.",
+      "We connect your funnel to a real booking system so interested coaches can grab a time instantly. Automated reminders cut no-shows and keep your calendar full.",
     bullets: [
-      "Workflow mapping and automation design",
-      "Custom agent development",
-      "Integration with your CRM, ERP, and internal tools",
-      "Human-in-the-loop safety controls",
+      "Instant calendar booking (Calendly / GHL)",
+      "Automated SMS + email reminders",
+      "Lead details captured to one place",
+      "No-show recovery built in",
     ],
     icon: "cpu",
   },
   {
-    slug: "model-integration",
-    name: "Model Integration & Fine-Tuning",
-    summary: "Get the most out of foundation models with retrieval, fine-tuning, and evaluation pipelines built for reliability.",
+    slug: "follow-up",
+    name: "Follow-up Automation",
+    summary:
+      "Automated follow-up that closes the 80% who don't say yes on day one — while you sleep.",
     description:
-      "We help you choose the right models, ground them in your own data with retrieval and fine-tuning, and build evaluation harnesses so quality holds up in production.",
+      "Most coaching income hides in the follow-up nobody sends. We build the automated sequences that keep working every lead until they book, without you touching your phone.",
     bullets: [
-      "Model selection and benchmarking",
-      "RAG pipelines and vector infrastructure",
-      "Fine-tuning on proprietary data",
-      "Evaluation and guardrail frameworks",
+      "Instant reply the second a lead comes in",
+      "Multi-step email + DM follow-up",
+      "Keyword automations (\"CLIENTS\" → booking link)",
+      "Re-engagement for cold leads",
     ],
     icon: "layers",
   },
   {
-    slug: "managed-support",
-    name: "Managed Support & Optimization",
-    summary: "Ongoing monitoring, tuning, and iteration so your AI systems keep improving after launch.",
+    slug: "optimization",
+    name: "Ongoing Optimization",
+    summary:
+      "We watch the numbers and keep tuning your funnel so booked calls go up month after month.",
     description:
-      "AI systems aren't a one-and-done deploy. Our managed support keeps models, prompts, and automations tuned as your data and business evolve.",
+      "A funnel isn't set-and-forget. We track where leads drop off, test new hooks and pages, and keep improving your conversion so the same audience books more calls over time.",
     bullets: [
-      "Performance monitoring and alerting",
+      "Conversion tracking & reporting",
+      "A/B testing of pages and hooks",
       "Monthly optimization sprints",
-      "Cost and latency tuning",
-      "Dedicated Slack channel with our engineers",
+      "Direct line to us when you need it",
     ],
     icon: "shield",
   },
@@ -78,107 +82,113 @@ export type PricingPlan = {
 
 export const pricingPlans: PricingPlan[] = [
   {
-    name: "Starter",
-    price: "$4,500",
-    cadence: "/month",
-    description: "For teams testing their first AI automation with expert guidance.",
+    name: "Free Funnel Audit",
+    price: "Free",
+    cadence: "",
+    description: "See exactly where you're losing clients — no pitch, no pressure.",
     features: [
-      "1 active automation workflow",
-      "Bi-weekly strategy sessions",
-      "Slack support",
-      "Monthly performance reporting",
+      "Full teardown of your current funnel",
+      "The exact leaks costing you calls",
+      "A prioritized fix list",
+      "A clear plan to book more calls",
     ],
-    cta: "Start with Starter",
+    cta: "Get your free audit",
   },
   {
-    name: "Growth",
-    price: "$12,000",
-    cadence: "/month",
-    description: "For companies scaling AI across multiple teams and workflows.",
+    name: "Done-For-You Funnel",
+    price: "From [YOUR PRICE]",
+    cadence: "one-off build",
+    description: "We build your full client-getting machine, end to end.",
     features: [
-      "Up to 5 active workflows / agents",
-      "Dedicated engineering pod",
-      "Weekly strategy sessions",
-      "Custom model fine-tuning",
-      "Priority Slack + on-call support",
+      "Landing / opt-in page that converts",
+      "Booking flow + automated reminders",
+      "Follow-up automation sequences",
+      "Instagram DM keyword automation",
+      "Live in 2–3 weeks",
     ],
-    cta: "Start with Growth",
+    cta: "Book a call",
     highlighted: true,
   },
   {
-    name: "Enterprise",
-    price: "Custom",
-    cadence: "",
-    description: "For organizations that need dedicated AI infrastructure and governance.",
+    name: "Growth Partner",
+    price: "From [YOUR PRICE]",
+    cadence: "/month",
+    description: "We run and optimize your funnel so booked calls keep climbing.",
     features: [
-      "Unlimited workflows and agents",
-      "On-prem / VPC deployment options",
-      "Custom security & compliance review",
-      "Dedicated account team",
-      "Quarterly executive business reviews",
+      "Everything in Done-For-You",
+      "Monthly optimization & testing",
+      "Conversion tracking & reporting",
+      "New campaigns & offers as you grow",
+      "Priority support",
     ],
-    cta: "Talk to sales",
+    cta: "Talk to us",
   },
 ];
 
 export const productFeatures = [
   {
-    title: "Unified agent workspace",
-    description: "Build, test, and deploy AI agents from a single visual canvas — no fragmented tooling.",
+    title: "Attract",
+    description:
+      "Content and ad support that gets the right coaches watching — not just anyone who scrolls by.",
     icon: "layout",
   },
   {
-    title: "Native integrations",
-    description: "Connect to your CRM, data warehouse, and internal APIs in minutes with pre-built connectors.",
+    title: "Capture",
+    description:
+      "One landing page that turns a viewer into a lead. One offer, one button, zero confusion.",
     icon: "plug",
   },
   {
-    title: "Real-time observability",
-    description: "Trace every agent decision, token, and tool call with full replay for debugging and audits.",
+    title: "Convert",
+    description:
+      "A booking flow that fills your calendar in two taps, with reminders that kill no-shows.",
     icon: "activity",
   },
   {
-    title: "Guardrails by default",
-    description: "Policy controls, PII redaction, and approval gates ship on by default, not bolted on later.",
+    title: "Follow-up",
+    description:
+      "Automated sequences that close the 80% who don't book on day one — while you sleep.",
     icon: "shield-check",
   },
   {
-    title: "Version-controlled prompts",
-    description: "Treat prompts and agent configs like code — diff, review, and roll back with confidence.",
+    title: "Track",
+    description:
+      "See where every lead comes from and where they drop off, so nothing leaks unnoticed.",
     icon: "git-branch",
   },
   {
-    title: "Usage-based cost controls",
-    description: "Set budgets per workflow and get alerted before costs run away.",
+    title: "Optimize",
+    description:
+      "We keep testing hooks, pages, and offers so the same audience books more calls over time.",
     icon: "gauge",
   },
 ];
 
 export const faqs = [
   {
-    question: "How long does a typical engagement take?",
+    question: "Do I need more followers first?",
     answer:
-      "Most engagements move from kickoff to a first production deployment in 6-10 weeks, depending on data readiness and integration complexity. We scope this precisely during our discovery phase.",
+      "No. This is built to convert the audience you already have. If you're getting engagement but not enough booked calls, you have enough traffic — you have a leak.",
   },
   {
-    question: "Do we need clean data before starting?",
+    question: "What exactly do you build?",
     answer:
-      "No. Part of our process includes a data readiness audit, and we frequently build the pipelines needed to get your data into a usable state as part of the engagement.",
+      "A landing page that captures leads, a booking flow that fills your calendar, and automated follow-up that closes the people who don't book on day one — done for you and wired into the tools you already use.",
   },
   {
-    question: "Can you work with our existing tech stack?",
+    question: "How long does it take?",
     answer:
-      "Yes — we design around your existing systems rather than asking you to rip and replace. Our team has integrated with most major CRMs, data warehouses, and internal tooling.",
+      "Most coach funnels go live in 2–3 weeks, depending on how much content and offer detail we start with. The free audit happens within days of reaching out.",
   },
   {
-    question: "What happens after launch?",
+    question: "What kind of coaches is this for?",
     answer:
-      "Every engagement includes a support and optimization phase. Many clients move to our Managed Support retainer to keep systems tuned as their business evolves.",
+      "Online coaches — fitness, business, mindset, life — who are getting attention but leaking clients between the post and the booked call.",
   },
   {
-    question: "Is our data used to train external models?",
+    question: "What does it cost?",
     answer:
-      "Never. Your data stays within your environment or a dedicated, isolated instance, and is never used to train third-party foundation models.",
+      "The funnel audit is free. Build and retainer pricing depends on scope — we cover it on the call once we've seen your setup. No obligation.",
   },
 ];
 
@@ -195,47 +205,47 @@ export type BlogPost = {
 export const blogPosts: BlogPost[] = [
   {
     slug: "when-to-build-vs-buy-ai",
-    title: "When to build vs. buy your AI stack",
+    title: "Why more followers won't get you more coaching clients",
     excerpt:
-      "A practical framework for deciding when a custom agent is worth the investment versus an off-the-shelf tool.",
-    date: "2026-06-02",
-    readTime: "7 min read",
-    category: "Strategy",
+      "The uncomfortable truth: most coaches don't have a traffic problem. They have a leak problem. Here's where the clients actually go.",
+    date: "2026-09-02",
+    readTime: "6 min read",
+    category: "Growth",
     content: [
-      "The build-vs-buy question comes up in nearly every AI strategy conversation we have, and the honest answer is usually 'it depends' — but that's not very actionable.",
-      "In practice, we've found three questions predict the right call better than anything else: how differentiated is this workflow to your business, how sensitive is the underlying data, and how fast does the tool landscape in this category move.",
-      "If a workflow is core to your competitive advantage, involves sensitive proprietary data, or needs to evolve faster than vendor roadmaps typically move, custom development usually wins on a 12-18 month horizon — even though it costs more upfront.",
-      "For everything else, a well-integrated off-the-shelf tool is almost always the faster, cheaper path, and trying to build custom here is one of the most common ways teams waste a year of engineering time.",
+      "Almost every coach who comes to us opens with the same line: 'I need more followers, more reach, more content.' Then we look at their numbers and the problem is never at the top of the funnel.",
+      "You already get people interested. The failure happens after — in the gap between 'interested' and 'booked.' Slow replies. A link-in-bio maze. No booking page. No follow-up. That's where your next clients are quietly disappearing.",
+      "Run the math: 100 people see your post, 40 click, and 2 book. Fix the path between the click and the calendar and those same 40 turn into 8 booked calls. Same audience, four times the clients.",
+      "More reach is the expensive fix. Plugging the leak is the fast one — because the hard part, earning attention, you've already done.",
     ],
   },
   {
     slug: "grounding-llms-in-your-data",
-    title: "Grounding LLMs in your data without losing your mind",
+    title: "The Coach Client Machine: the 4 parts of a full calendar",
     excerpt:
-      "RAG, fine-tuning, and hybrid approaches explained — with a decision tree for picking the right one.",
-    date: "2026-05-14",
-    readTime: "9 min read",
-    category: "Engineering",
+      "Attract, Capture, Convert, Follow-up. Miss one and clients leak out. Here's how the whole system fits together.",
+    date: "2026-08-20",
+    readTime: "7 min read",
+    category: "Systems",
     content: [
-      "Retrieval-augmented generation gets recommended as a default so often that teams forget it's a tool with real tradeoffs, not a universal fix.",
-      "RAG shines when your underlying facts change frequently and you need traceability back to a source document. Fine-tuning shines when you need the model to reliably follow a specific style, format, or domain-specific reasoning pattern.",
-      "Most production systems we build end up using both: RAG for facts, light fine-tuning or few-shot examples for behavior. The mistake we see most often is trying to solve a behavior problem with more retrieved context.",
-      "Before reaching for either, build an evaluation set. Without one, you're optimizing based on vibes, and vibes don't scale past a demo.",
+      "Every coach with a full calendar runs four parts together. Most coaches run only one — they make content — and wonder why the clients don't come.",
+      "Attract gets the right people watching. Capture turns a viewer into a lead on one clear page. Convert fills your calendar with a real booking flow. Follow-up closes the majority who don't say yes on day one.",
+      "The parts only work connected. Attract without Capture is wasted reach. Convert without Follow-up is lost clients. A leak in any one and the whole machine underperforms.",
+      "The good news: you probably already have Attract handled. Build the other three once and the content you're already posting starts filling your calendar.",
     ],
   },
   {
     slug: "governance-that-doesnt-slow-you-down",
-    title: "AI governance that doesn't slow your team down",
+    title: "Speed to lead: why the first 5 minutes decide the sale",
     excerpt:
-      "How to put guardrails around AI systems without turning every project into a six-month compliance review.",
-    date: "2026-04-22",
-    readTime: "6 min read",
-    category: "Operations",
+      "A lead is 21x more likely to book if you reply in 5 minutes instead of 5 hours. Here's how to win that window automatically.",
+    date: "2026-08-06",
+    readTime: "5 min read",
+    category: "Automation",
     content: [
-      "Governance gets treated as the enemy of shipping speed, but the teams that move fastest with AI long-term are usually the ones with the clearest guardrails, not the least.",
-      "The key is building governance into the system itself — approval gates, PII redaction, and audit trails as default infrastructure — rather than as a review process bolted on at the end.",
-      "When guardrails are automatic, review committees can focus on genuinely novel risk instead of relitigating the same access questions for every new workflow.",
-      "Start with a short list of non-negotiables (data handling, human review thresholds, escalation paths) and automate enforcement of those before you worry about anything else.",
+      "When someone raises their hand for your coaching, they are never more ready to buy than in that first moment. Wait three hours to reply and they've cooled off — or booked with a coach who answered first.",
+      "The data is brutal: reach a lead within five minutes and they're up to 21 times more likely to convert than if you wait an hour. Most coaches reply in hours, if at all.",
+      "You don't have to live on your phone to win this. One automation sends an instant, personal-feeling reply the second a lead comes in — and hands them a link to book while they're still hot.",
+      "Set it up once and it runs forever. Same leads, far more booked calls, zero extra effort from you.",
     ],
   },
 ];

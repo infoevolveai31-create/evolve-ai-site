@@ -7,11 +7,11 @@ import { Logo } from "./Logo";
 import { Button } from "./Button";
 
 const links = [
-  { href: "/services", label: "Services" },
-  { href: "/product", label: "Product" },
+  { href: "/services", label: "What We Do" },
+  { href: "/product", label: "The System" },
   { href: "/pricing", label: "Pricing" },
-  { href: "/blog", label: "Blog" },
   { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function Navbar() {
@@ -53,10 +53,10 @@ export function Navbar() {
         </nav>
         <div className="hidden lg:flex items-center gap-3">
           <Button href="/contact" variant="secondary" size="sm">
-            Sign in
+            Book a call
           </Button>
           <Button href="/contact" variant="primary" size="sm">
-            Book a Call
+            Free audit
           </Button>
         </div>
         <button

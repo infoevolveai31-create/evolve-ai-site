@@ -6,15 +6,15 @@ import { Glow } from "@/components/Glow";
 import { services, faqs } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "Services",
-  description: "AI strategy, custom automation, model integration, and managed support from Evolve AI.",
+  title: "What We Do",
+  description: "Done-for-you funnels for online coaches: landing pages, booking, and follow-up automation that book more calls.",
 };
 
 const process = [
-  { step: "01", title: "Discover", description: "We audit your workflows, data, and systems to find the highest-ROI opportunities." },
-  { step: "02", title: "Design", description: "We scope a solution architecture and get alignment before writing production code." },
-  { step: "03", title: "Build", description: "Our engineers ship in weekly increments with working demos, not slide decks." },
-  { step: "04", title: "Operate", description: "We monitor, tune, and iterate post-launch so performance holds up at scale." },
+  { step: "01", title: "Free audit", description: "We map your current funnel and show you exactly where you're losing clients." },
+  { step: "02", title: "Plan", description: "We design your client machine — the pages, booking, and follow-up you're missing." },
+  { step: "03", title: "Build", description: "We build it end to end and wire it into the tools you already use. Live in 2–3 weeks." },
+  { step: "04", title: "Optimize", description: "We track conversions and keep tuning so booked calls climb month after month." },
 ];
 
 export default function ServicesPage() {
@@ -24,17 +24,17 @@ export default function ServicesPage() {
         <Glow className="h-[420px] w-[420px] bg-teal/20 -top-32 left-1/4" />
         <Container className="relative pt-20 pb-20 sm:pt-28">
           <div className="max-w-3xl">
-            <Eyebrow>Services</Eyebrow>
+            <Eyebrow>What we do</Eyebrow>
             <h1 className="mt-6 font-display text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.05]">
-              AI expertise, applied to your <span className="text-gradient">actual</span> business.
+              Everything that turns your followers into <span className="text-gradient">clients</span>.
             </h1>
             <p className="mt-6 text-lg text-fg-muted leading-relaxed max-w-2xl">
-              We don&apos;t sell generic AI transformation. Every engagement is scoped
-              around specific workflows, specific data, and a specific ROI target.
+              We don&apos;t sell generic marketing. We build the funnel system that books
+              calls for online coaches — attract, capture, convert, follow-up.
             </p>
             <div className="mt-8">
               <Button href="/contact" size="lg">
-                Book a strategy call
+                Get your free audit
               </Button>
             </div>
           </div>
@@ -81,8 +81,8 @@ export default function ServicesPage() {
         <Container>
           <SectionHeading
             eyebrow="How we work"
-            title="A process built to ship, not stall"
-            description="No 6-month discovery phases. We move in tight cycles with visible progress every step."
+            title="From audit to booked calls in 4 steps"
+            description="No drawn-out projects. We map the leaks, build the fix, and keep it converting."
           />
           <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {process.map((p) => (
@@ -98,7 +98,7 @@ export default function ServicesPage() {
 
       <section className="py-24">
         <Container className="max-w-4xl">
-          <SectionHeading eyebrow="Questions" title="Common questions about our engagements" />
+          <SectionHeading eyebrow="Questions" title="Common questions from coaches" />
           <div className="mt-14 flex flex-col divide-y divide-border border-y border-border">
             {faqs.map((f) => (
               <details key={f.question} className="group py-6">
@@ -121,10 +121,10 @@ export default function ServicesPage() {
             <Glow className="h-[400px] w-[400px] bg-indigo/20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
             <div className="relative flex flex-col items-center gap-6">
               <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight max-w-2xl">
-                Not sure which service fits? Let&apos;s figure it out together.
+                Not sure what you need? Start with a free funnel audit.
               </h2>
               <Button href="/contact" size="lg">
-                Book a strategy call
+                Get your free audit
               </Button>
             </div>
           </div>
