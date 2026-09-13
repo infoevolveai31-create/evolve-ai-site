@@ -3,9 +3,9 @@ import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "EVOLVE AI — Funnels for Property Coaches",
+  title: "EVOLVE AI — Funnels for Coaches",
   description:
-    "Done-for-you funnels that turn property coaches' followers into booked calls. Get a free funnel audit.",
+    "Done-for-you funnels that turn coaches' followers into booked calls. Get a free funnel audit.",
 };
 
 export default function RootLayout({
