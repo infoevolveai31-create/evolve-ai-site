@@ -8,7 +8,7 @@ import { Container } from "./Container";
 const socials = [
   {
     label: "Instagram",
-    href: "https://www.instagram.com/automation_by_abhi/",
+    href: "https://www.instagram.com/client_acquisition_by_abhi/",
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" strokeWidth="1.8" />
