@@ -64,6 +64,8 @@ export async function GET(req: NextRequest) {
     model: "claude-sonnet-5",
   };
   if (key) {
+    const msg = req.nextUrl.searchParams.get("msg") || "say ok";
+    const useSystem = req.nextUrl.searchParams.get("sys") === "1";
     try {
       const r = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
@@ -74,15 +76,19 @@ export async function GET(req: NextRequest) {
         },
         body: JSON.stringify({
           model: "claude-sonnet-5",
-          max_tokens: 16,
-          messages: [{ role: "user", content: "say ok" }],
+          max_tokens: 400,
+          ...(useSystem ? { system: SYSTEM_PROMPT } : {}),
+          messages: [{ role: "user", content: msg }],
         }),
       });
       const data = await r.json().catch(() => null);
       info.anthropicStatus = r.status;
       info.anthropicOk = r.ok;
       info.anthropicError = data?.error ?? null;
+      info.stopReason = data?.stop_reason ?? null;
+      info.contentTypes = Array.isArray(data?.content) ? data.content.map((c: { type: string }) => c.type) : null;
       info.anthropicText = data?.content?.[0]?.text ?? null;
+      info.rawFirst = data ? JSON.stringify(data).slice(0, 500) : null;
     } catch (e) {
       info.fetchError = String(e);
     }
