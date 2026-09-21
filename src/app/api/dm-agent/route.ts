@@ -52,10 +52,28 @@ function parseHistory(raw: unknown): Turn[] {
     .map((t) => ({ role: t.role, content: t.content }));
 }
 
+// ManyChat's Instagram dynamic block errors if a set_field_value value carries
+// newlines or emoji, so the STORED transcript is flattened to single-line ASCII-ish
+// text. This only affects the memory Claude reads back — the reply shown to the
+// user keeps its original formatting and emoji.
+function clean(s: string): string {
+  return s
+    .replace(/[\n\r\t]+/g, " ")
+    .replace(
+      /[\u{1F000}-\u{1FAFF}\u{1F300}-\u{1FAFF}\u{2190}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE00}-\u{FE0F}\u{200D}]/gu,
+      "",
+    )
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 // Trim the transcript so it stays bounded and stays valid for the API:
 // must start with a user turn (Anthropic requirement) and stay under the caps.
 function cap(turns: Turn[]): Turn[] {
-  let out = turns.slice(-MAX_TURNS);
+  let out = turns
+    .map((t) => ({ role: t.role, content: clean(t.content) }))
+    .filter((t) => t.content)
+    .slice(-MAX_TURNS);
   while (out.length && out[0].role === "assistant") out = out.slice(1);
   while (out.length > 2 && JSON.stringify(out).length > MAX_CHARS) {
     out = out.slice(2);
