@@ -50,7 +50,42 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// health check
-export async function GET() {
-  return NextResponse.json({ ok: true, service: "dm-agent" });
+// health check + temporary diagnostic (GET /api/dm-agent?debug=evolve)
+export async function GET(req: NextRequest) {
+  const debug = req.nextUrl.searchParams.get("debug");
+  if (debug !== "evolve") {
+    return NextResponse.json({ ok: true, service: "dm-agent" });
+  }
+  const key = process.env.ANTHROPIC_API_KEY;
+  const info: Record<string, unknown> = {
+    hasKey: !!key,
+    keyStart: key ? key.slice(0, 8) : null,
+    keyLen: key ? key.length : 0,
+    model: "claude-sonnet-5",
+  };
+  if (key) {
+    try {
+      const r = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "x-api-key": key,
+          "anthropic-version": "2023-06-01",
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "claude-sonnet-5",
+          max_tokens: 16,
+          messages: [{ role: "user", content: "say ok" }],
+        }),
+      });
+      const data = await r.json().catch(() => null);
+      info.anthropicStatus = r.status;
+      info.anthropicOk = r.ok;
+      info.anthropicError = data?.error ?? null;
+      info.anthropicText = data?.content?.[0]?.text ?? null;
+    } catch (e) {
+      info.fetchError = String(e);
+    }
+  }
+  return NextResponse.json(info);
 }
