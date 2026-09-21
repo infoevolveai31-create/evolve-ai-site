@@ -42,56 +42,20 @@ export async function POST(req: NextRequest) {
       }),
     });
     const data = await r.json().catch(() => null);
+    // claude-sonnet-5 can return a leading "thinking" block, so pick the first
+    // block of type "text" rather than assuming content[0].
+    const blocks: Array<{ type: string; text?: string }> = Array.isArray(data?.content)
+      ? data.content
+      : [];
     const text: string =
-      data?.content?.[0]?.text?.trim() || FALLBACK;
+      blocks.find((b) => b.type === "text")?.text?.trim() || FALLBACK;
     return mc(text);
   } catch {
     return mc(FALLBACK);
   }
 }
 
-// health check + temporary diagnostic (GET /api/dm-agent?debug=evolve)
-export async function GET(req: NextRequest) {
-  const debug = req.nextUrl.searchParams.get("debug");
-  if (debug !== "evolve") {
-    return NextResponse.json({ ok: true, service: "dm-agent" });
-  }
-  const key = process.env.ANTHROPIC_API_KEY;
-  const info: Record<string, unknown> = {
-    hasKey: !!key,
-    keyStart: key ? key.slice(0, 8) : null,
-    keyLen: key ? key.length : 0,
-    model: "claude-sonnet-5",
-  };
-  if (key) {
-    const msg = req.nextUrl.searchParams.get("msg") || "say ok";
-    const useSystem = req.nextUrl.searchParams.get("sys") === "1";
-    try {
-      const r = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: {
-          "x-api-key": key,
-          "anthropic-version": "2023-06-01",
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "claude-sonnet-5",
-          max_tokens: 400,
-          ...(useSystem ? { system: SYSTEM_PROMPT } : {}),
-          messages: [{ role: "user", content: msg }],
-        }),
-      });
-      const data = await r.json().catch(() => null);
-      info.anthropicStatus = r.status;
-      info.anthropicOk = r.ok;
-      info.anthropicError = data?.error ?? null;
-      info.stopReason = data?.stop_reason ?? null;
-      info.contentTypes = Array.isArray(data?.content) ? data.content.map((c: { type: string }) => c.type) : null;
-      info.anthropicText = data?.content?.[0]?.text ?? null;
-      info.rawFirst = data ? JSON.stringify(data).slice(0, 500) : null;
-    } catch (e) {
-      info.fetchError = String(e);
-    }
-  }
-  return NextResponse.json(info);
+// health check
+export async function GET() {
+  return NextResponse.json({ ok: true, service: "dm-agent" });
 }
