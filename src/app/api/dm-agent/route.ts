@@ -9,49 +9,108 @@ const SYSTEM_PROMPT = "========================================================\
 const FALLBACK =
   "hey! thanks for reaching out 🙌 happy to do a free teardown of where you might be losing booked calls. mind if I ask a couple quick things first?";
 
-function mc(text: string) {
+type Turn = { role: "user" | "assistant"; content: string };
+
+// ManyChat custom field that stores the running transcript between turns.
+const HISTORY_FIELD = "dm_history";
+const MAX_TURNS = 16; // keep the last ~8 exchanges
+const MAX_CHARS = 4000; // ManyChat text-field safety cap on the stored transcript
+
+// Return a ManyChat Dynamic-Content v2 reply, and (when history is given) an
+// action that writes the updated transcript back into the dm_history field.
+function mc(text: string, historyJson?: string) {
+  const actions = historyJson
+    ? [{ action: "set_field_value", field_name: HISTORY_FIELD, value: historyJson }]
+    : [];
   return NextResponse.json({
     version: "v2",
-    content: { messages: [{ type: "text", text }], actions: [], quick_replies: [] },
+    content: { messages: [{ type: "text", text }], actions, quick_replies: [] },
   });
 }
 
+// Parse the transcript ManyChat sent back (a JSON string, or already-parsed array).
+function parseHistory(raw: unknown): Turn[] {
+  let arr: unknown = raw;
+  if (typeof raw === "string") {
+    const s = raw.trim();
+    if (!s) return [];
+    try {
+      arr = JSON.parse(s);
+    } catch {
+      return [];
+    }
+  }
+  if (!Array.isArray(arr)) return [];
+  return arr
+    .filter(
+      (t): t is Turn =>
+        !!t &&
+        typeof t === "object" &&
+        ((t as Turn).role === "user" || (t as Turn).role === "assistant") &&
+        typeof (t as Turn).content === "string",
+    )
+    .map((t) => ({ role: t.role, content: t.content }));
+}
+
+// Trim the transcript so it stays bounded and stays valid for the API:
+// must start with a user turn (Anthropic requirement) and stay under the caps.
+function cap(turns: Turn[]): Turn[] {
+  let out = turns.slice(-MAX_TURNS);
+  while (out.length && out[0].role === "assistant") out = out.slice(1);
+  while (out.length > 2 && JSON.stringify(out).length > MAX_CHARS) {
+    out = out.slice(2);
+    while (out.length && out[0].role === "assistant") out = out.slice(1);
+  }
+  return out;
+}
+
 export async function POST(req: NextRequest) {
+  let convo: Turn[] = [];
   try {
     const body = await req.json().catch(() => ({} as Record<string, unknown>));
-    const message =
+    const message = (
       (body.message as string) ||
       (body["last_text_input"] as string) ||
       (body["Last Text Input"] as string) ||
-      "";
-    const key = process.env.ANTHROPIC_API_KEY;
-    if (!key) return mc(FALLBACK);
+      ""
+    ).toString();
 
-    const r = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "x-api-key": key,
-        "anthropic-version": "2023-06-01",
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "claude-sonnet-5",
-        max_tokens: 400,
-        system: SYSTEM_PROMPT,
-        messages: [{ role: "user", content: message || "hi" }],
-      }),
-    });
-    const data = await r.json().catch(() => null);
-    // claude-sonnet-5 can return a leading "thinking" block, so pick the first
-    // block of type "text" rather than assuming content[0].
-    const blocks: Array<{ type: string; text?: string }> = Array.isArray(data?.content)
-      ? data.content
-      : [];
-    const text: string =
-      blocks.find((b) => b.type === "text")?.text?.trim() || FALLBACK;
-    return mc(text);
+    const history = parseHistory(body.history ?? body[HISTORY_FIELD]);
+    convo = [...history, { role: "user", content: message || "hi" }];
+    while (convo.length && convo[0].role === "assistant") convo = convo.slice(1);
+
+    const key = process.env.ANTHROPIC_API_KEY;
+    let reply = FALLBACK;
+    if (key) {
+      const r = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "x-api-key": key,
+          "anthropic-version": "2023-06-01",
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "claude-sonnet-5",
+          max_tokens: 400,
+          system: SYSTEM_PROMPT,
+          messages: convo,
+        }),
+      });
+      const data = await r.json().catch(() => null);
+      // claude-sonnet-5 can return a leading "thinking" block, so pick the first
+      // block of type "text" rather than assuming content[0].
+      const blocks: Array<{ type: string; text?: string }> = Array.isArray(data?.content)
+        ? data.content
+        : [];
+      reply = blocks.find((b) => b.type === "text")?.text?.trim() || FALLBACK;
+    }
+
+    const updated = cap([...convo, { role: "assistant", content: reply }]);
+    return mc(reply, JSON.stringify(updated));
   } catch {
-    return mc(FALLBACK);
+    // On any failure still persist what we have so the thread stays coherent.
+    const updated = cap([...convo, { role: "assistant", content: FALLBACK }]);
+    return mc(FALLBACK, JSON.stringify(updated));
   }
 }
 
