@@ -16,15 +16,16 @@ const HISTORY_FIELD = "dm_history";
 const MAX_TURNS = 16; // keep the last ~8 exchanges
 const MAX_CHARS = 4000; // ManyChat text-field safety cap on the stored transcript
 
-// Return a ManyChat Dynamic-Content v2 reply, and (when history is given) an
-// action that writes the updated transcript back into the dm_history field.
+// Return a ManyChat Dynamic-Content v2 reply. Instagram's dynamic block rejects
+// the set_field_value action, so we do NOT use actions here. The updated
+// transcript is exposed as a top-level `history` (and `reply`) field so it can be
+// captured via an External Request response-mapping instead.
 function mc(text: string, historyJson?: string) {
-  const actions = historyJson
-    ? [{ action: "set_field_value", field_name: HISTORY_FIELD, value: historyJson }]
-    : [];
   return NextResponse.json({
     version: "v2",
-    content: { messages: [{ type: "text", text }], actions, quick_replies: [] },
+    content: { messages: [{ type: "text", text }], actions: [], quick_replies: [] },
+    reply: text,
+    history: historyJson ?? "",
   });
 }
 
